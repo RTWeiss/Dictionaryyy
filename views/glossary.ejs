@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Glossary</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #0056b3;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      header {
+        background-color: #0056b3;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        width: 100%;
+      }
+
+      h1 {
+        margin: 0;
+        color: #fff;
+        font-size: 28px;
+      }
+
+      nav {
+        margin-top: 20px;
+      }
+
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      nav ul li {
+        margin: 0 10px;
+      }
+
+      nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s ease;
+      }
+
+      nav ul li a:hover {
+        color: #f0f0f0;
+      }
+
+      #content {
+        max-width: 600px;
+        width: 90%;
+        margin-top: 40px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h2 {
+        color: #666;
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bg-primary text-white p-3 text-center">
+      <h1 class="h2 mb-3">Dictionaryyy</h1>
+      <nav>
+        <ul class="nav justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/glossary">Glossary</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container mt-4">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card bg-white rounded shadow p-4">
+            <h1 class="h2 text-muted text-center mb-4">Glossary</h1>
+            <ul class="list-group list-group-flush">
+              <% terms.forEach((term) => { %>
+              <li class="list-group-item">
+                <a href="/term/<%= term %>"
+                  ><%= term.charAt(0).toUpperCase() + term.slice(1) %></a
+                >
+              </li>
+              <% }); %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- include Bootstrap JavaScript -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

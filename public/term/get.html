@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Definition of get</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      :root {
+        --blue: #0056b3;
+        --light-blue: #6b9fd1;
+        --light-grey: #f9f9f9;
+        --dark-grey: #666;
+        --white: #fff;
+        --black: #000;
+        --transition-speed: 0.3s;
+        --base-font-size: 16px;
+        --base-padding: 10px;
+        --base-margin: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+        font-family: 'Roboto', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--light-grey);
+        color: var(--blue);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: var(--base-padding);
+      }
+
+      header {
+        background-color: var(--blue);
+        color: var(--white);
+        padding: 2*var(--base-padding);
+        text-align: center;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
+      }
+
+      header p {
+        font-size: 1.75rem;
+        font-weight: 500;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding-top: 2*var(--base-padding);
+      }
+
+      nav ul li {
+        margin: 0 var(--base-margin);
+      }
+
+      nav ul li a {
+        color: var(--white);
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color var(--transition-speed) ease;
+      }
+
+      nav ul li a:hover {
+        color: var(--light-blue);
+      }
+
+      #content {
+        max-width: 37.5rem;
+        width: 100%;
+        margin-top: 2.5rem;
+        padding: var(--base-padding);
+        background-color: var(--white);
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
+      }
+
+      h1, h2 {
+        color: var(--blue);
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.625rem;
+        color: var(--dark-grey);
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      /* Mobile Styles */
+      @media only screen and (max-width: 37.5em) {
+        #sidebar {
+          width: 100%;
+          margin-bottom2rem;
+        }
+
+        #main-content {
+          width: 100%;
+        }
+      }
+
+      /* Desktop Styles */
+      @media only screen and (min-width: 37.5em) {
+        #content {
+          display: flex;
+          gap: 1rem;
+        }
+
+        #sidebar {
+          flex: 1;
+          border-right: 1px solid var(--dark-grey);
+          padding-right: var(--base-padding);
+        }
+
+        #main-content {
+          flex: 3;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bg-primary text-white p-3 text-center">
+      <p class="m-0 h2">Dictionaryyy</p>
+      <nav>
+        <ul class="nav justify-content-center py-2">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/glossary">Glossary</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container my-4 bg-white p-3 rounded shadow">
+      <div class="row">
+        <!-- Add a sidebar for recent searches -->
+        <div class="col-md-3">
+          <h2 class="text-primary">Recent Searches</h2>
+          <ul class="list-unstyled">
+            
+            <li><a href="/term/get">get</a></li>
+            
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <form method="POST" action="/" class="mb-4">
+            <div class="input-group">
+              <input
+                type="text"
+                name="word"
+                class="form-control"
+                placeholder="Enter a word"
+              />
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+            </div>
+          </form>
+
+          <div>
+            <h1 class="text-primary">Definition of get</h1>
+
+             
+            <h2 class="text-secondary">noun</h2>
+            
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">Offspring.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">Lineage.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">A difficult return or block of a shot.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">Something gained; an acquisition.</p>
+              </div>
+            </div>
+              
+            <h2 class="text-secondary">verb</h2>
+            
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">(ditransitive) To obtain; to acquire.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To receive.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">(in a perfect construction, with present-tense meaning) To have. See usage notes.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To fetch, bring, take.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To become, or cause oneself to become.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To cause to become; to bring about.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To cause to do.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To cause to come or go or move.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To cause to be in a certain status or position.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">(with various prepositions, such as into, over, or behind; for specific idiomatic senses see individual entries get into, get over, etc.) To adopt, assume, arrive at, or progress towards (a certain position, location, state).</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To cover (a certain distance) while travelling.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To begin (doing something or to do something).</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To take or catch (a scheduled transportation service).</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To respond to (a telephone call, a doorbell, etc).</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">(followed by infinitive) To be able, be permitted, or have the opportunity (to do something desirable or ironically implied to be desirable).</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To understand. (compare get it)</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To be told; be the recipient of (a question, comparison, opinion, etc.).</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To be. Used to form the passive of verbs.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To become ill with or catch (a disease).</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To catch out, trick successfully.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To perplex, stump.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To find as an answer.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To bring to reckoning; to catch (as a criminal); to effect retribution.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To hear completely; catch.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To getter.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To beget (of a father).</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To learn; to commit to memory; to memorize; sometimes with out.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">Used with a personal pronoun to indicate that someone is being pretentious or grandiose.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To go, to leave; to scram.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To kill.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To make acquisitions; to gain; to profit.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <!-- Wrap every definition into a new card -->
+              <div class="card-body">
+                <p class="card-text">To measure.</p>
+              </div>
+            </div>
+               
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
