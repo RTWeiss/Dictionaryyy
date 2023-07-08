@@ -173,7 +173,3 @@ app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).send("An internal server error occurred");
 });
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
