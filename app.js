@@ -65,32 +65,11 @@ const getSortedTerms = () => {
 };
 
 app.get("/", (req, res) => {
-  let popularSearches = [];
-
-  client.keys("*", function (err, keys) {
-    if (err) {
-      console.log(err);
-    } else {
-      // For each key in Redis, get the count
-      keys.forEach((key) => {
-        client.get(key, function (err, count) {
-          if (err) {
-            console.log(err);
-          } else {
-            popularSearches.push({ word: key, count: count });
-          }
-        });
-      });
-
-      // Sort the words by count and limit the number of words
-      popularSearches.sort((a, b) => b.count - a.count);
-      popularSearches = popularSearches
-        .slice(0, MAX_POPULAR_SEARCHES)
-        .map((entry) => entry.word);
-
-      res.render("index", { recentSearches, popularSearches });
-    }
-  });
+  const popularSearches = Object.entries(searchCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, MAX_POPULAR_SEARCHES)
+    .map((entry) => entry[0]);
+  res.render("index", { recentSearches, popularSearches, searchCounts });
 });
 
 app.get("/term/:word", async (req, res) => {
@@ -140,14 +119,12 @@ const updateSearches = (word) => {
     }
   }
 
-  // Increment search count for the word in Redis
-  client.incr(word, function (err, reply) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("New count for " + word + " is " + reply);
-    }
-  });
+  // Increment search count for the word
+  if (searchCounts[word]) {
+    searchCounts[word]++;
+  } else {
+    searchCounts[word] = 1;
+  }
 };
 
 app.get("/glossary", (req, res) => {
