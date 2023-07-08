@@ -201,24 +201,26 @@
             <% } %>
           </div>
         </div>
-        <div class="col-md-3">
-          <h2 class="text-primary">Recent Searches</h2>
-          <ul class="list-group">
-            <% recentSearches.forEach(function(search) { %>
-            <li class="list-group-item">
-              <a href="/term/<%= search %>"
-                ><%= search.charAt(0).toUpperCase() + search.slice(1) %></a
-              >
-            </li>
-            <% }); %>
-          </ul>
-          <p></p>
-          <h2 class="text-primary">Synonyms</h2>
-          <ul class="list-group">
-            <% thesaurusData[0].meta.syns[0].forEach(synonym => { %>
-            <li class="list-group-item"><%= synonym %></li>
-            <% }) %>
-          </ul>
+        <div class="row">
+          <div class="col-md-3">
+            <h2 class="text-primary">Recent Searches</h2>
+            <ul class="list-group">
+              <% recentSearches.forEach(function(search) { %>
+              <li class="list-group-item">
+                <a href="/term/<%= search %>"
+                  ><%= search.charAt(0).toUpperCase() + search.slice(1) %></a
+                >
+              </li>
+              <% }); %>
+            </ul>
+            <p></p>
+            <h2 class="text-primary">Synonyms</h2>
+            <ul class="list-group">
+              <% thesaurusData[0].meta.syns[0].forEach(synonym => { %>
+              <li class="list-group-item"><%= synonym %></li>
+              <% }) %>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
