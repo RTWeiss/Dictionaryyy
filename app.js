@@ -6,13 +6,15 @@ const fs = require("fs");
 const app = express();
 const redis = require("redis");
 require("dotenv").config();
-
+const { parse } = require("pg-connection-string");
 const { Pool } = require("pg");
-const connectionString = process.env.DATABASE_URL;
 
-const pool = new Pool({
-  connectionString: connectionString,
-});
+const config = parse(process.env.DATABASE_URL);
+config.ssl = { rejectUnauthorized: false };
+
+const pool = new Pool(config);
+
+const connectionString = process.env.DATABASE_URL;
 
 pool.on("error", (err, client) => {
   console.error("Unexpected error on idle client", err);
