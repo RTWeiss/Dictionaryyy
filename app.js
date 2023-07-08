@@ -23,6 +23,23 @@ pool.on("error", (err, client) => {
 
 const port = process.env.PORT || 3000;
 
+const createTermsTable = async () => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS terms (
+         id SERIAL PRIMARY KEY,
+         term TEXT NOT NULL,
+         definition JSONB,
+         synonyms JSONB,
+         antonyms JSONB
+      );
+    `);
+    console.log("Terms table created or already exists.");
+  } catch (err) {
+    console.error(err.stack);
+  }
+};
+
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
     if (req.headers["x-forwarded-proto"] != "https") {
