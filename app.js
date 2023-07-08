@@ -121,6 +121,12 @@ app.post("/", async (req, res, next) => {
     );
     const data = response.data[0];
 
+    // Fetch synonyms and antonyms from the Merriam-Webster Thesaurus API
+    const thesaurusResponse = await axios.get(
+      `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=7085ae97-a37c-4ad1-a6d1-ef26c269158d`
+    );
+    const thesaurusData = thesaurusResponse.data;
+
     if (!recentSearches.includes(word)) {
       recentSearches.unshift(word);
       if (recentSearches.length > MAX_RECENT_SEARCHES) {
@@ -140,7 +146,12 @@ app.post("/", async (req, res, next) => {
     try {
       const html = await ejs.renderFile(
         path.join(__dirname, "views", "definition.ejs"),
-        { word: word, meanings: data.meanings, recentSearches: recentSearches }
+        {
+          word: word,
+          meanings: data.meanings,
+          recentSearches: recentSearches,
+          thesaurusData: thesaurusData,
+        }
       );
 
       fs.writeFileSync(
