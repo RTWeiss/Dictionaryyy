@@ -47,7 +47,7 @@ const generateSitemap = () => {
   const files = fs.readdirSync(termPath);
   const urls = files.map((file) => {
     const fileName = path.basename(file, path.extname(file));
-    return `http://localhost:3000/term/${fileName}`;
+    return `https://dictionaryyy.com/term/${fileName}`;
   });
   const sitemap = urls.map((url) => `<url><loc>${url}</loc></url>`).join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
