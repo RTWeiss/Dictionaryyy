@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Definition of What | What
+      Does What Mean?
+    </title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      :root {
+        --blue: #0056b3;
+        --light-blue: #6b9fd1;
+        --light-grey: #f9f9f9;
+        --dark-grey: #666;
+        --white: #fff;
+        --black: #000;
+        --transition-speed: 0.3s;
+        --base-font-size: 16px;
+        --base-padding: 10px;
+        --base-margin: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+        font-family: 'Roboto', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--light-grey);
+        color: var(--blue);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: var(--base-padding);
+      }
+
+      header {
+        background-color: var(--blue);
+        color: var(--white);
+        padding: 2*var(--base-padding);
+        text-align: center;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
+      }
+
+      header p {
+        font-size: 1.75rem;
+        font-weight: 500;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding-top: 2*var(--base-padding);
+      }
+
+      nav ul li {
+        margin: 0 var(--base-margin);
+      }
+
+      nav ul li a {
+        color: var(--white);
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color var(--transition-speed) ease;
+      }
+
+      nav ul li a:hover {
+        color: var(--light-blue);
+      }
+
+      #content {
+        max-width: 37.5rem;
+        width: 100%;
+        margin-top: 2.5rem;
+        padding: var(--base-padding);
+        background-color: var(--white);
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
+      }
+
+      h1, h2 {
+        color: var(--blue);
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.625rem;
+        color: var(--dark-grey);
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      /* Mobile Styles */
+      @media only screen and (max-width: 37.5em) {
+        #sidebar {
+          width: 100%;
+          margin-bottom2rem;
+        }
+
+        #main-content {
+          width: 100%;
+        }
+      }
+
+      /* Desktop Styles */
+      @media only screen and (min-width: 37.5em) {
+        #content {
+          display: flex;
+          gap: 1rem;
+        }
+
+        #sidebar {
+          flex: 1;
+          border-right: 1px solid var(--dark-grey);
+          padding-right: var(--base-padding);
+        }
+
+        #main-content {
+          flex: 3;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bg-primary text-white p-3 text-center">
+      <p class="m-0 h2">Dictionaryyy</p>
+      <nav>
+        <ul class="nav justify-content-center py-2">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/glossary">Glossary</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container my-4 bg-white p-3 rounded shadow">
+      <div class="row">
+        <!-- Add a sidebar for recent searches -->
+        <div class="col-md-3">
+          <h2 class="text-primary">Recent Searches</h2>
+          <ul class="list-unstyled">
+            
+            <li>
+              <a href="/term/What"
+                >What</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/holy"
+                >Holy</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/search engine optimization"
+                >Search engine optimization</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/marketing"
+                >Marketing</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/push"
+                >Push</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/Tank"
+                >Tank</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/shit"
+                >Shit</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/Stallion"
+                >Stallion</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/Cult"
+                >Cult</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/dare"
+                >Dare</a
+              >
+            </li>
+            
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <form method="POST" action="/" class="mb-4">
+            <div class="input-group">
+              <input
+                type="text"
+                name="word"
+                class="form-control"
+                placeholder="Enter a word"
+              />
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+            </div>
+          </form>
+
+          <div>
+            <h1 class="text-primary">
+              Definition of What
+            </h1>
+
+              
+            <h2 class="text-secondary">adverb</h2>
+            
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">(Singlish) Used to contradict an underlying assumption held by the interlocutor.</p>
+              </div>
+            </div>
+              
+            <h2 class="text-secondary">noun</h2>
+            
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">Something; thing; stuff.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">The identity of a thing, as an answer to a question of what.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">Something that is addressed by what, as opposed to a person, addressed by who.</p>
+              </div>
+            </div>
+              
+            <h2 class="text-secondary">adverb</h2>
+            
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">(usually followed by &#34;with,&#34; but also sometimes &#34;would&#34; or &#34;might,&#34; especially in finance) In some manner or degree; in part; partly. See also what with</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">Such.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">Why.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">Used to introduce each of two coordinate phrases or concepts; both…and.</p>
+              </div>
+            </div>
+              
+            <h2 class="text-secondary">pronoun</h2>
+            
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">(interrogative) Which thing, event, circumstance, etc.: used interrogatively in asking for the specification of an identity, quantity, quality, etc.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">That which; those that; the thing that.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">(relative) That; which; who.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">Whatever.</p>
+              </div>
+            </div>
+              
+            <h2 class="text-secondary">interjection</h2>
+            
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">An expression of surprise or disbelief.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">What do you want? An abrupt, usually unfriendly enquiry as to what a person desires.</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">Clipping of what do you say?</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">What did you say? I beg your pardon?</p>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-body">
+                <p class="card-text">(typically with a) An intensifier to an adjective phrase; used to begin a sentence.</p>
+              </div>
+            </div>
+                
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

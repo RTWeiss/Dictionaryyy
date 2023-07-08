@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Definition of Pinch | What
+      Does Pinch Mean?
+    </title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <style>
+      :root {
+        --blue: #0056b3;
+        --light-blue: #6b9fd1;
+        --light-grey: #f9f9f9;
+        --dark-grey: #666;
+        --white: #fff;
+        --black: #000;
+        --transition-speed: 0.3s;
+        --base-font-size: 16px;
+        --base-padding: 10px;
+        --base-margin: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+        font-family: "Roboto", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--light-grey);
+        color: var(--blue);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: var(--base-padding);
+      }
+
+      header {
+        background-color: var(--blue);
+        color: var(--white);
+        padding: 2 * var(--base-padding);
+        text-align: center;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
+      }
+
+      header p {
+        font-size: 1.75rem;
+        font-weight: 500;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding-top: 2 * var(--base-padding);
+      }
+
+      nav ul li {
+        margin: 0 var(--base-margin);
+      }
+
+      nav ul li a {
+        color: var(--white);
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color var(--transition-speed) ease;
+      }
+
+      nav ul li a:hover {
+        color: var(--light-blue);
+      }
+
+      #content {
+        max-width: 37.5rem;
+        width: 100%;
+        margin-top: 2.5rem;
+        padding: var(--base-padding);
+        background-color: var(--white);
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
+      }
+
+      h1,
+      h2 {
+        color: var(--blue);
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.625rem;
+        color: var(--dark-grey);
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      /* Mobile Styles */
+      @media only screen and (max-width: 37.5em) {
+        #sidebar {
+          width: 100%;
+          margin-bottom: 2rem;
+        }
+
+        #main-content {
+          width: 100%;
+        }
+      }
+
+      /* Desktop Styles */
+      @media only screen and (min-width: 37.5em) {
+        #content {
+          display: flex;
+          gap: 1rem;
+        }
+
+        #sidebar {
+          flex: 1;
+          border-right: 1px solid var(--dark-grey);
+          padding-right: var(--base-padding);
+        }
+
+        #main-content {
+          flex: 3;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bg-primary text-white p-3 text-center">
+      <p class="m-0 h2">Dictionaryyy</p>
+      <nav>
+        <ul class="nav justify-content-center py-2">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/glossary">Glossary</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container my-4 bg-white p-3 rounded shadow">
+      <center><h2 class="text-muted">Search for a Definition</h2></center>
+      <form method="POST" action="/" class="mb-4">
+        <div class="input-group">
+          <input
+            type="text"
+            name="word"
+            class="form-control"
+            placeholder="Enter Word"
+          />
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="container my-4 bg-white p-3 rounded shadow">
+      <div class="row">
+        <div class="col-md-3">
+          <h2 class="text-primary">Recent Searches</h2>
+          <ul class="list-group">
+            
+            <li class="list-group-item">
+              <a href="/term/pinch"
+                >Pinch</a
+              >
+            </li>
+            
+            <li class="list-group-item">
+              <a href="/term/order"
+                >Order</a
+              >
+            </li>
+            
+            <li class="list-group-item">
+              <a href="/term/punk"
+                >Punk</a
+              >
+            </li>
+            
+            <li class="list-group-item">
+              <a href="/term/pixel"
+                >Pixel</a
+              >
+            </li>
+            
+            <li class="list-group-item">
+              <a href="/term/contain"
+                >Contain</a
+              >
+            </li>
+            
+          </ul>
+          <p></p>
+          <h2 class="text-primary">Synonyms</h2>
+          <ul class="list-group">
+            
+            <li class="list-group-item">alternate</li>
+            
+            <li class="list-group-item">alternative</li>
+            
+            <li class="list-group-item">makeshift</li>
+            
+            <li class="list-group-item">new</li>
+            
+            <li class="list-group-item">substitute</li>
+            
+            <li class="list-group-item">substitutive</li>
+            
+            <li class="list-group-item">different</li>
+            
+            <li class="list-group-item">other</li>
+            
+            <li class="list-group-item">separate</li>
+            
+            <li class="list-group-item">extra</li>
+            
+            <li class="list-group-item">spare</li>
+            
+            <li class="list-group-item">improvised</li>
+            
+            <li class="list-group-item">jury</li>
+            
+            <li class="list-group-item">another</li>
+            
+            <li class="list-group-item">second</li>
+            
+            <li class="list-group-item">utility</li>
+            
+            <li class="list-group-item">successive</li>
+            
+            <li class="list-group-item">equivalent</li>
+            
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <div>
+            <h1 class="text-primary">
+              Pinch
+            </h1>
+              
+            <div class="card my-3">
+              <div class="card-header">
+                <h2 class="text-secondary">noun</h2>
+              </div>
+              <div class="row card-body">
+                <div class="card-body">
+                   
+                  <li class="card-text">The action of squeezing a small amount of a person&#39;s skin and flesh, making it hurt.</li>
+                  
+                  <li class="card-text">A close compression of anything with the fingers.</li>
+                  
+                  <li class="card-text">A small amount of powder or granules, such that the amount could be held between fingertip and thumb tip.</li>
+                  
+                  <li class="card-text">An awkward situation of some kind (especially money or social) which is difficult to escape.</li>
+                  
+                  <li class="card-text">A metal bar used as a lever for lifting weights, rolling wheels, etc.</li>
+                  
+                  <li class="card-text">An organic herbal smoke additive.</li>
+                  
+                  <li class="card-text">A magnetic compression of an electrically-conducting filament.</li>
+                  
+                  <li class="card-text">The narrow part connecting the two bulbs of an hourglass.</li>
+                  
+                  <li class="card-text">An arrest.</li>
+                   
+                </div>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-header">
+                <h2 class="text-secondary">verb</h2>
+              </div>
+              <div class="row card-body">
+                <div class="card-body">
+                   
+                  <li class="card-text">To squeeze a small amount of a person&#39;s skin and flesh, making it hurt.</li>
+                  
+                  <li class="card-text">To squeeze between the thumb and forefinger.</li>
+                  
+                  <li class="card-text">To squeeze between two objects.</li>
+                  
+                  <li class="card-text">To steal, usually something inconsequential.</li>
+                  
+                  <li class="card-text">To arrest or capture.</li>
+                  
+                  <li class="card-text">To cut shoots or buds of a plant in order to shape the plant, or to improve its yield.</li>
+                  
+                  <li class="card-text">To sail so close-hauled that the sails begin to flutter.</li>
+                  
+                  <li class="card-text">To take hold; to grip, as a dog does.</li>
+                  
+                  <li class="card-text">To be stingy or covetous; to live sparingly.</li>
+                  
+                  <li class="card-text">To seize; to grip; to bite; said of animals.</li>
+                  
+                  <li class="card-text">To cramp; to straiten; to oppress; to starve.</li>
+                  
+                  <li class="card-text">To move, as a railroad car, by prying the wheels with a pinch.</li>
+                  
+                  <li class="card-text">To complain or find fault.</li>
+                   
+                </div>
+              </div>
+            </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

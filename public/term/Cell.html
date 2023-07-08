@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Definition of Cell | What
+      Does Cell Mean?
+    </title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <style>
+      :root {
+        --blue: #0056b3;
+        --light-blue: #6b9fd1;
+        --light-grey: #f9f9f9;
+        --dark-grey: #666;
+        --white: #fff;
+        --black: #000;
+        --transition-speed: 0.3s;
+        --base-font-size: 16px;
+        --base-padding: 10px;
+        --base-margin: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+        font-family: "Roboto", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--light-grey);
+        color: var(--blue);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: var(--base-padding);
+      }
+
+      header {
+        background-color: var(--blue);
+        color: var(--white);
+        padding: 2 * var(--base-padding);
+        text-align: center;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
+      }
+
+      header p {
+        font-size: 1.75rem;
+        font-weight: 500;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding-top: 2 * var(--base-padding);
+      }
+
+      nav ul li {
+        margin: 0 var(--base-margin);
+      }
+
+      nav ul li a {
+        color: var(--white);
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color var(--transition-speed) ease;
+      }
+
+      nav ul li a:hover {
+        color: var(--light-blue);
+      }
+
+      #content {
+        max-width: 37.5rem;
+        width: 100%;
+        margin-top: 2.5rem;
+        padding: var(--base-padding);
+        background-color: var(--white);
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
+      }
+
+      h1,
+      h2 {
+        color: var(--blue);
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.625rem;
+        color: var(--dark-grey);
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      /* Mobile Styles */
+      @media only screen and (max-width: 37.5em) {
+        #sidebar {
+          width: 100%;
+          margin-bottom: 2rem;
+        }
+
+        #main-content {
+          width: 100%;
+        }
+      }
+
+      /* Desktop Styles */
+      @media only screen and (min-width: 37.5em) {
+        #content {
+          display: flex;
+          gap: 1rem;
+        }
+
+        #sidebar {
+          flex: 1;
+          border-right: 1px solid var(--dark-grey);
+          padding-right: var(--base-padding);
+        }
+
+        #main-content {
+          flex: 3;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bg-primary text-white p-3 text-center">
+      <p class="m-0 h2">Dictionaryyy</p>
+      <nav>
+        <ul class="nav justify-content-center py-2">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/glossary">Glossary</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container my-4 bg-white p-3 rounded shadow">
+      <center><h2 class="text-muted">Search for a Definition</h2></center>
+      <form method="POST" action="/" class="mb-4">
+        <div class="input-group">
+          <input
+            type="text"
+            name="word"
+            class="form-control"
+            placeholder="Enter Word"
+          />
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="container my-4 bg-white p-3 rounded shadow">
+      <div class="row">
+        <div class="col-md-3">
+          <h2 class="text-primary">Recent Searches</h2>
+          <ul class="list-group">
+            
+            <li class="list-group-item">
+              <a href="/term/cell"
+                >Cell</a
+              >
+            </li>
+            
+            <li class="list-group-item">
+              <a href="/term/course"
+                >Course</a
+              >
+            </li>
+            
+            <li class="list-group-item">
+              <a href="/term/share"
+                >Share</a
+              >
+            </li>
+            
+            <li class="list-group-item">
+              <a href="/term/curse"
+                >Curse</a
+              >
+            </li>
+            
+            <li class="list-group-item">
+              <a href="/term/cold"
+                >Cold</a
+              >
+            </li>
+            
+          </ul>
+          <p></p>
+          <h2 class="text-primary">Synonyms</h2>
+          <ul class="list-group">
+            
+            <li class="list-group-item">apartment</li>
+            
+            <li class="list-group-item">chamber</li>
+            
+            <li class="list-group-item">closet</li>
+            
+            <li class="list-group-item">room</li>
+            
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <div>
+            <h1 class="text-primary">
+              Cell
+            </h1>
+              
+            <div class="card my-3">
+              <div class="card-header">
+                <h2 class="text-secondary">noun</h2>
+              </div>
+              <div class="row card-body">
+                <div class="card-body">
+                   
+                  <li class="card-text">A single-room dwelling for a hermit.</li>
+                  
+                  <li class="card-text">A small monastery or nunnery dependent on a larger religious establishment.</li>
+                  
+                  <li class="card-text">A small room in a monastery or nunnery accommodating one person.</li>
+                  
+                  <li class="card-text">A room in a prison or jail for one or more inmates.</li>
+                  
+                  <li class="card-text">Each of the small hexagonal compartments in a honeycomb.</li>
+                  
+                  <li class="card-text">Any of various chambers in a tissue or organism having specific functions.</li>
+                  
+                  <li class="card-text">The discal cell of the wing of a lepidopteran insect.</li>
+                  
+                  <li class="card-text">Specifically, any of the supposed compartments of the brain, formerly thought to be the source of specific mental capacities, knowledge, or memories.</li>
+                  
+                  <li class="card-text">A section or compartment of a larger structure.</li>
+                  
+                  <li class="card-text">Any small dwelling; a remote nook, a den.</li>
+                  
+                  <li class="card-text">A device which stores electrical power; used either singly or together in batteries; the basic unit of a battery.</li>
+                  
+                  <li class="card-text">The basic unit of a living organism, consisting of a quantity of protoplasm surrounded by a cell membrane, which is able to synthesize proteins and replicate itself.</li>
+                  
+                  <li class="card-text">A small thunderstorm, caused by convection, that forms ahead of a storm front.</li>
+                  
+                  <li class="card-text">The minimal unit of a cellular automaton that can change state and has an associated behavior.</li>
+                  
+                  <li class="card-text">In FreeCell-type games, a space where one card can be placed.</li>
+                  
+                  <li class="card-text">A small group of people forming part of a larger organization, often an outlawed one.</li>
+                  
+                  <li class="card-text">(communication) A short, fixed-length packet as in asynchronous transfer mode.</li>
+                  
+                  <li class="card-text">(communication) A region of radio reception that is a part of a larger radio network.</li>
+                  
+                  <li class="card-text">A three-dimensional facet of a polytope.</li>
+                  
+                  <li class="card-text">The unit in a statistical array (a spreadsheet, for example) where a row and a column intersect.</li>
+                  
+                  <li class="card-text">The space between the ribs of a vaulted roof.</li>
+                  
+                  <li class="card-text">A cella.</li>
+                  
+                  <li class="card-text">An area of an insect wing bounded by veins</li>
+                   
+                </div>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-header">
+                <h2 class="text-secondary">verb</h2>
+              </div>
+              <div class="row card-body">
+                <div class="card-body">
+                   
+                  <li class="card-text">To place or enclose in a cell.</li>
+                   
+                </div>
+              </div>
+            </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

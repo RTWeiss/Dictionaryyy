@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Definition of Go | What
+      Does Go Mean?
+    </title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <style>
+      :root {
+        --blue: #0056b3;
+        --light-blue: #6b9fd1;
+        --light-grey: #f9f9f9;
+        --dark-grey: #666;
+        --white: #fff;
+        --black: #000;
+        --transition-speed: 0.3s;
+        --base-font-size: 16px;
+        --base-padding: 10px;
+        --base-margin: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+        font-family: 'Roboto', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--light-grey);
+        color: var(--blue);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: var(--base-padding);
+      }
+
+      header {
+        background-color: var(--blue);
+        color: var(--white);
+        padding: 2*var(--base-padding);
+        text-align: center;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
+      }
+
+      header p {
+        font-size: 1.75rem;
+        font-weight: 500;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding-top: 2*var(--base-padding);
+      }
+
+      nav ul li {
+        margin: 0 var(--base-margin);
+      }
+
+      nav ul li a {
+        color: var(--white);
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color var(--transition-speed) ease;
+      }
+
+      nav ul li a:hover {
+        color: var(--light-blue);
+      }
+
+      #content {
+        max-width: 37.5rem;
+        width: 100%;
+        margin-top: 2.5rem;
+        padding: var(--base-padding);
+        background-color: var(--white);
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
+      }
+
+      h1, h2 {
+        color: var(--blue);
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        margin-bottom: 0.625rem;
+        color: var(--dark-grey);
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      /* Mobile Styles */
+      @media only screen and (max-width: 37.5em) {
+        #sidebar {
+          width: 100%;
+          margin-bottom2rem;
+        }
+
+        #main-content {
+          width: 100%;
+        }
+      }
+
+      /* Desktop Styles */
+      @media only screen and (min-width: 37.5em) {
+        #content {
+          display: flex;
+          gap: 1rem;
+        }
+
+        #sidebar {
+          flex: 1;
+          border-right: 1px solid var(--dark-grey);
+          padding-right: var(--base-padding);
+        }
+
+        #main-content {
+          flex: 3;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bg-primary text-white p-3 text-center">
+      <p class="m-0 h2">Dictionaryyy</p>
+      <nav>
+        <ul class="nav justify-content-center py-2">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/glossary">Glossary</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container my-4 bg-white p-3 rounded shadow">
+      <div class="row">
+        <div class="col-md-3">
+          <h2 class="text-primary">Recent Searches</h2>
+          <ul class="list-unstyled">
+            
+            <li>
+              <a href="/term/agony"
+                >Agony</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/blaze"
+                >Blaze</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/go"
+                >Go</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/sure"
+                >Sure</a
+              >
+            </li>
+            
+            <li>
+              <a href="/term/joke"
+                >Joke</a
+              >
+            </li>
+            
+          </ul>
+          <h2>Synonyms</h2>
+          <ul class="list-group">
+            
+            <li class="list-group-item">advance</li>
+            
+            <li class="list-group-item">come</li>
+            
+            <li class="list-group-item">come along</li>
+            
+            <li class="list-group-item">do</li>
+            
+            <li class="list-group-item">fare</li>
+            
+            <li class="list-group-item">forge</li>
+            
+            <li class="list-group-item">get along</li>
+            
+            <li class="list-group-item">get on</li>
+            
+            <li class="list-group-item">go along</li>
+            
+            <li class="list-group-item">go off</li>
+            
+            <li class="list-group-item">march</li>
+            
+            <li class="list-group-item">pace</li>
+            
+            <li class="list-group-item">proceed</li>
+            
+            <li class="list-group-item">progress</li>
+            
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <form method="POST" action="/" class="mb-4">
+            <div class="input-group">
+              <input
+                type="text"
+                name="word"
+                class="form-control"
+                placeholder="Enter a word"
+              />
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+            </div>
+          </form>
+
+          <div>
+            <h1 class="text-primary">
+              Term: Go
+            </h1>
+              
+            <div class="card my-3">
+              <div class="card-header">
+                <h2 class="text-secondary">noun</h2>
+              </div>
+              <div class="row card-body">
+                <div class="col-md-8">
+                  <h3>Definition</h3>
+                   
+                  <p class="card-text">The act of going.</p>
+                  
+                  <p class="card-text">A turn at something, or in something (e.g. a game).</p>
+                  
+                  <p class="card-text">An attempt, a try.</p>
+                  
+                  <p class="card-text">An approval or permission to do something, or that which has been approved.</p>
+                  
+                  <p class="card-text">An act; the working or operation.</p>
+                  
+                  <p class="card-text">A circumstance or occurrence; an incident, often unexpected.</p>
+                  
+                  <p class="card-text">The fashion or mode.</p>
+                  
+                  <p class="card-text">Noisy merriment.</p>
+                  
+                  <p class="card-text">A glass of spirits; a quantity of spirits.</p>
+                  
+                  <p class="card-text">Power of going or doing; energy; vitality; perseverance.</p>
+                  
+                  <p class="card-text">The situation where a player cannot play a card which will not carry the aggregate count above thirty-one.</p>
+                  
+                  <p class="card-text">A period of activity.</p>
+                  
+                  <p class="card-text">(British slang) A dandy; a fashionable person.</p>
+                   
+                </div>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-header">
+                <h2 class="text-secondary">verb</h2>
+              </div>
+              <div class="row card-body">
+                <div class="col-md-8">
+                  <h3>Definition</h3>
+                   
+                  <p class="card-text">To move:</p>
+                  
+                  <p class="card-text">(chiefly of a machine) To work or function (properly); to move or perform (as required).</p>
+                  
+                  <p class="card-text">To start; to begin (an action or process).</p>
+                  
+                  <p class="card-text">To take a turn, especially in a game.</p>
+                  
+                  <p class="card-text">To attend.</p>
+                  
+                  <p class="card-text">To proceed:</p>
+                  
+                  <p class="card-text">To follow or travel along (a path):</p>
+                  
+                  <p class="card-text">To extend (from one point in time or space to another).</p>
+                  
+                  <p class="card-text">To lead (to a place); to give access to.</p>
+                  
+                  <p class="card-text">To become. (The adjective that follows usually describes a negative state.)</p>
+                  
+                  <p class="card-text">To assume the obligation or function of; to be, to serve as.</p>
+                  
+                  <p class="card-text">To continuously or habitually be in a state.</p>
+                  
+                  <p class="card-text">To come to (a certain condition or state).</p>
+                  
+                  <p class="card-text">To change (from one value to another) in the meaning of wend.</p>
+                  
+                  <p class="card-text">To turn out, to result; to come to (a certain result).</p>
+                  
+                  <p class="card-text">To tend (toward a result).</p>
+                  
+                  <p class="card-text">To contribute to a (specified) end product or result.</p>
+                  
+                  <p class="card-text">To pass, to be used up:</p>
+                  
+                  <p class="card-text">To die.</p>
+                  
+                  <p class="card-text">To be discarded.</p>
+                  
+                  <p class="card-text">To be lost or out:</p>
+                  
+                  <p class="card-text">To break down or apart:</p>
+                  
+                  <p class="card-text">To be sold.</p>
+                  
+                  <p class="card-text">To be given, especially to be assigned or allotted.</p>
+                  
+                  <p class="card-text">To survive or get by; to last or persist for a stated length of time.</p>
+                  
+                  <p class="card-text">To have a certain record.</p>
+                  
+                  <p class="card-text">To be authoritative, accepted, or valid:</p>
+                  
+                  <p class="card-text">To say (something), to make a sound:</p>
+                  
+                  <p class="card-text">To be expressed or composed (a certain way).</p>
+                  
+                  <p class="card-text">To resort (to).</p>
+                  
+                  <p class="card-text">To apply or subject oneself to:</p>
+                  
+                  <p class="card-text">To fit (in a place, or together with something):</p>
+                  
+                  <p class="card-text">To date.</p>
+                  
+                  <p class="card-text">To attack:</p>
+                  
+                  <p class="card-text">To be in general; to be usually.</p>
+                  
+                  <p class="card-text">To take (a particular part or share); to participate in to the extent of.</p>
+                  
+                  <p class="card-text">To yield or weigh.</p>
+                  
+                  <p class="card-text">To offer, bid or bet an amount; to pay.</p>
+                  
+                  <p class="card-text">To enjoy. (Compare go for.)</p>
+                  
+                  <p class="card-text">To urinate or defecate.</p>
+                   
+                </div>
+              </div>
+            </div>
+            
+            <div class="card my-3">
+              <div class="card-header">
+                <h2 class="text-secondary">adjective</h2>
+              </div>
+              <div class="row card-body">
+                <div class="col-md-8">
+                  <h3>Definition</h3>
+                   
+                  <p class="card-text">Working correctly and ready to commence operation; approved and able to be put into action.</p>
+                   
+                </div>
+              </div>
+            </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
