@@ -4,6 +4,7 @@ const path = require("path");
 const ejs = require("ejs");
 const fs = require("fs");
 const app = express();
+const port = process.env.PORT || 3000;
 
 const MAX_RECENT_SEARCHES = 5;
 const MAX_POPULAR_SEARCHES = 5; // Maximum number of popular searches to display
@@ -172,4 +173,8 @@ app.post("/", async (req, res, next) => {
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).send("An internal server error occurred");
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
