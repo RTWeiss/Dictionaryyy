@@ -5,6 +5,17 @@ const ejs = require("ejs");
 const fs = require("fs");
 const app = express();
 const redis = require("redis");
+const client = redis.createClient({
+  url: process.env.REDIS_URL,
+});
+
+client.on("connect", function () {
+  console.log("Connected to Redis");
+});
+
+client.on("error", function (err) {
+  console.error("Error connecting to Redis:", err);
+});
 
 const port = process.env.PORT || 3000;
 
