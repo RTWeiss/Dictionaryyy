@@ -6,16 +6,16 @@ const fs = require("fs");
 const app = express();
 const redis = require("redis");
 
-const client = redis.createClient({
-  url: process.env.REDIS_URL,
+const { Pool } = require("pg");
+const connectionString = process.env.DATABASE_URL;
+
+const pool = new Pool({
+  connectionString: connectionString,
 });
 
-client.on("connect", function () {
-  console.log("Connected to Redis");
-});
-
-client.on("error", function (err) {
-  console.error("Error connecting to Redis:", err);
+pool.on("error", (err, client) => {
+  console.error("Unexpected error on idle client", err);
+  process.exit(-1);
 });
 
 const port = process.env.PORT || 3000;
@@ -124,6 +124,18 @@ const updateSearches = (word) => {
     searchCounts[word]++;
   } else {
     searchCounts[word] = 1;
+  }
+};
+
+const saveTerm = async (term, definition, synonyms, antonyms) => {
+  try {
+    const res = await pool.query(
+      "INSERT INTO terms(term, definition, synonyms, antonyms) VALUES($1, $2, $3, $4) RETURNING *",
+      [term, definition, synonyms, antonyms]
+    );
+    console.log(res.rows[0]);
+  } catch (err) {
+    console.log(err.stack);
   }
 };
 
