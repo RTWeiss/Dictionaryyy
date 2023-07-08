@@ -215,12 +215,12 @@
           <p></p>
           <h2 class="text-primary">Synonyms</h2>
           <ul class="list-group">
-            <% thesaurusData[0].meta.syns[0].forEach(synonym => { %>
+            <% if (thesaurusData && thesaurusData[0] && thesaurusData[0].meta &&
+            thesaurusData[0].meta.syns && thesaurusData[0].meta.syns[0]) { %> <%
+            thesaurusData[0].meta.syns[0].forEach(synonym => { %>
             <li class="list-group-item"><%= synonym %></li>
-            <% }) %><% } else { %>
+            <% }) %> <% } else { %>
             <p>No Synonyms found for the word.</p>
-            <% } %> <% } else { %>
-            <p>Word not found in the Thesaurus.</p>
             <% } %>
           </ul>
         </div>
