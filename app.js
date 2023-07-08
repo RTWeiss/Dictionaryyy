@@ -96,6 +96,9 @@ app.get("/term/:word", async (req, res) => {
     );
     const thesaurusData = thesaurusResponse.data;
 
+    // Save term to the database
+    saveTerm(word, meanings, thesaurusData.synonyms, thesaurusData.antonyms);
+
     updateSearches(word);
 
     res.locals.header = "header";
