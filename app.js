@@ -6,6 +6,16 @@ const fs = require("fs");
 const app = express();
 const port = process.env.PORT || 3000;
 
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.headers["x-forwarded-proto"] != "https") {
+      res.redirect(`https://${req.headers.host}${req.url}`);
+    } else {
+      next();
+    }
+  });
+}
+
 const MAX_RECENT_SEARCHES = 5;
 const MAX_POPULAR_SEARCHES = 5; // Maximum number of popular searches to display
 let recentSearches = [];
