@@ -18,18 +18,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-import { createClient } from "redis";
-
-const client = createClient({
-  url: "rediss://default:********@us1-cool-sponge-38554.upstash.io:38554",
-});
-
-client.on("error", function (err) {
-  throw err;
-});
-await client.connect();
-await client.set("foo", "bar");
-
 const MAX_RECENT_SEARCHES = 5;
 const MAX_POPULAR_SEARCHES = 5; // Maximum number of popular searches to display
 let recentSearches = [];
