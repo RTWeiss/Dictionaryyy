@@ -5,6 +5,7 @@ const ejs = require("ejs");
 const fs = require("fs");
 const app = express();
 const redis = require("redis");
+
 const client = redis.createClient({
   url: process.env.REDIS_URL,
 });
@@ -111,12 +112,19 @@ app.get("/term/:word", async (req, res) => {
 });
 
 const updateSearches = (word) => {
-  if (!recentSearches.includes(word)) {
-    recentSearches.unshift(word);
-    if (recentSearches.length > MAX_RECENT_SEARCHES) {
-      recentSearches.pop();
+  client.lpush("recentSearches", word, (err) => {
+    if (err) {
+      console.error("Error updating recent searches:", err);
+    } else {
+      client.ltrim("recentSearches", 0, MAX_RECENT_SEARCHES - 1);
     }
-  }
+  });
+
+  client.zincrby("searchCounts", 1, word, (err) => {
+    if (err) {
+      console.error("Error updating search counts:", err);
+    }
+  });
 
   // Increment search count for the word
   if (searchCounts[word]) {
@@ -151,12 +159,26 @@ app.post("/", async (req, res, next) => {
     );
     const thesaurusData = thesaurusResponse.data;
 
-    if (!recentSearches.includes(word)) {
-      recentSearches.unshift(word);
-      if (recentSearches.length > MAX_RECENT_SEARCHES) {
-        recentSearches.pop();
+    client.lrange("recentSearches", 0, -1, (err, recentSearches) => {
+      if (err) {
+        console.error("Error getting recent searches:", err);
+        recentSearches = [];
       }
-    }
+
+      client.zrevrange(
+        "searchCounts",
+        0,
+        MAX_POPULAR_SEARCHES - 1,
+        (err, popularSearches) => {
+          if (err) {
+            console.error("Error getting popular searches:", err);
+            popularSearches = [];
+          }
+
+          res.render("index", { recentSearches, popularSearches });
+        }
+      );
+    });
 
     // Increment search count for the word
     if (searchCounts[word]) {
