@@ -74,40 +74,51 @@ app.get("/", (req, res) => {
 
 app.get("/term/:word", async (req, res) => {
   const word = req.params.word;
-  const filePath = path.join(__dirname, "public", "term", `${word}.html`);
 
-  // Use try-catch to handle errors
   try {
-    // Check if the definition file already exists
-    if (fs.existsSync(filePath)) {
-      return res.sendFile(filePath);
+    // Fetch term from the database
+    const dbResponse = await pool.query("SELECT * FROM terms WHERE term = $1", [
+      word,
+    ]);
+    const dbData = dbResponse.rows[0];
+
+    if (dbData) {
+      // If term exists in the database, render the page with the database data
+      res.locals.header = "header";
+      res.render("definition", {
+        word: word,
+        meanings: dbData.meanings,
+        thesaurusData: {
+          synonyms: dbData.synonyms,
+          antonyms: dbData.antonyms,
+        },
+        recentSearches: recentSearches,
+      });
+    } else {
+      // If term does not exist in the database, fetch it from the API and save it to the database
+      const response = await axios.get(
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+      );
+      const data = response.data[0];
+      const meanings = data.meanings;
+
+      const thesaurusResponse = await axios.get(
+        `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=7085ae97-a37c-4ad1-a6d1-ef26c269158d`
+      );
+      const thesaurusData = thesaurusResponse.data;
+
+      saveTerm(word, meanings, thesaurusData.synonyms, thesaurusData.antonyms);
+
+      updateSearches(word);
+
+      res.locals.header = "header";
+      res.render("definition", {
+        word: word,
+        meanings: meanings,
+        thesaurusData: thesaurusData,
+        recentSearches: recentSearches,
+      });
     }
-
-    // Fetch definition from the dictionary API
-    const response = await axios.get(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-    );
-    const data = response.data[0];
-    const meanings = data.meanings;
-
-    // Fetch synonyms and antonyms from the Merriam-Webster Thesaurus API
-    const thesaurusResponse = await axios.get(
-      `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=7085ae97-a37c-4ad1-a6d1-ef26c269158d`
-    );
-    const thesaurusData = thesaurusResponse.data;
-
-    // Save term to the database
-    saveTerm(word, meanings, thesaurusData.synonyms, thesaurusData.antonyms);
-
-    updateSearches(word);
-
-    res.locals.header = "header";
-    res.render("definition", {
-      word: word,
-      meanings: meanings,
-      thesaurusData: thesaurusData,
-      recentSearches: recentSearches,
-    });
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching the data.");
@@ -161,48 +172,23 @@ app.post("/", async (req, res, next) => {
     );
     const data = response.data[0];
 
-    // Fetch synonyms and antonyms from the Merriam-Webster Thesaurus API
     const thesaurusResponse = await axios.get(
       `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=7085ae97-a37c-4ad1-a6d1-ef26c269158d`
     );
     const thesaurusData = thesaurusResponse.data;
 
-    if (!recentSearches.includes(word)) {
-      recentSearches.unshift(word);
-      if (recentSearches.length > MAX_RECENT_SEARCHES) {
-        recentSearches.pop();
-      }
-    }
-
-    // Increment search count for the word
-    if (searchCounts[word]) {
-      searchCounts[word]++;
-    } else {
-      searchCounts[word] = 1;
-    }
+    updateSearches(word);
 
     const url = `/term/${word}`;
 
-    try {
-      const html = await ejs.renderFile(
-        path.join(__dirname, "views", "definition.ejs"),
-        {
-          word: word,
-          meanings: data.meanings,
-          recentSearches: recentSearches,
-          thesaurusData: thesaurusData,
-        }
-      );
+    saveTerm(
+      word,
+      data.meanings,
+      thesaurusData.synonyms,
+      thesaurusData.antonyms
+    );
 
-      fs.writeFileSync(
-        path.join(__dirname, "public", "term", `${word}.html`),
-        html
-      );
-      res.redirect(url);
-    } catch (err) {
-      console.error(err);
-      return next(err);
-    }
+    res.redirect(url);
   } catch (error) {
     console.error(error);
     return next(error);
