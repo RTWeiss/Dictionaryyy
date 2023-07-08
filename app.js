@@ -112,19 +112,12 @@ app.get("/term/:word", async (req, res) => {
 });
 
 const updateSearches = (word) => {
-  client.lpush("recentSearches", word, (err) => {
-    if (err) {
-      console.error("Error updating recent searches:", err);
-    } else {
-      client.ltrim("recentSearches", 0, MAX_RECENT_SEARCHES - 1);
+  if (!recentSearches.includes(word)) {
+    recentSearches.unshift(word);
+    if (recentSearches.length > MAX_RECENT_SEARCHES) {
+      recentSearches.pop();
     }
-  });
-
-  client.zincrby("searchCounts", 1, word, (err) => {
-    if (err) {
-      console.error("Error updating search counts:", err);
-    }
-  });
+  }
 
   // Increment search count for the word
   if (searchCounts[word]) {
@@ -159,26 +152,12 @@ app.post("/", async (req, res, next) => {
     );
     const thesaurusData = thesaurusResponse.data;
 
-    client.lrange("recentSearches", 0, -1, (err, recentSearches) => {
-      if (err) {
-        console.error("Error getting recent searches:", err);
-        recentSearches = [];
+    if (!recentSearches.includes(word)) {
+      recentSearches.unshift(word);
+      if (recentSearches.length > MAX_RECENT_SEARCHES) {
+        recentSearches.pop();
       }
-
-      client.zrevrange(
-        "searchCounts",
-        0,
-        MAX_POPULAR_SEARCHES - 1,
-        (err, popularSearches) => {
-          if (err) {
-            console.error("Error getting popular searches:", err);
-            popularSearches = [];
-          }
-
-          res.render("index", { recentSearches, popularSearches });
-        }
-      );
-    });
+    }
 
     // Increment search count for the word
     if (searchCounts[word]) {
