@@ -187,7 +187,6 @@ app.get("/sitemap.xml", async (req, res) => {
     res.status(500).send("An error occurred while generating the sitemap.");
   }
 });
-
 app.post("/", async (req, res, next) => {
   const word = req.body.word.toLowerCase();
   try {
@@ -197,22 +196,26 @@ app.post("/", async (req, res, next) => {
     const data = response.data[0];
 
     let definitions = [];
+    let partOfSpeech = [];
+
     data.meanings.forEach((item) => {
+      partOfSpeech.push(item.partOfSpeech);
       item.definitions.forEach((def) => {
         definitions.push(def.definition);
       });
     });
     definitions = definitions.join(", ");
+    partOfSpeech = partOfSpeech.join(", ");
 
     const thesaurusResponse = await axios.get(
       `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=7085ae97-a37c-4ad1-a6d1-ef26c269158d`
     );
     const thesaurusData = thesaurusResponse.data[0];
 
-    let synonyms = thesaurusData.meta.syns.join(", ");
-    let antonyms = thesaurusData.meta.ants.join(", ");
+    let synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", "); // Get the first 5 synonyms
+    let antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", "); // Get the first 5 antonyms
 
-    saveTerm(word, definitions, synonyms, antonyms);
+    saveTerm(word, definitions, synonyms, antonyms, partOfSpeech);
 
     res.redirect(`/term/${word}`);
   } catch (error) {
