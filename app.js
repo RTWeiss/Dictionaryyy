@@ -126,47 +126,17 @@ app.get("/term/:word", async (req, res) => {
 
     if (dbData) {
       // If term exists in the database, render the page with the database data
-      res.locals.header = "header";
+      let synonyms = dbData.synonyms.split(", ");
+      let antonyms = dbData.antonyms.split(", ");
+      let definitions = dbData.definition.split(", ");
+
       res.render("definition", {
         word: word,
-        meanings: dbData.meanings,
+        meanings: definitions,
         thesaurusData: {
-          synonyms: dbData.synonyms,
-          antonyms: dbData.antonyms,
+          synonyms: synonyms,
+          antonyms: antonyms,
         },
-        recentSearches: recentSearches,
-      });
-    } else {
-      const response = await axios.get(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-      );
-      const data = response.data[0];
-
-      let definitions = [];
-      data.meanings.forEach((item) => {
-        item.definitions.forEach((def) => {
-          definitions.push(def.definition);
-        });
-      });
-      definitions = definitions.join(", ");
-
-      const thesaurusResponse = await axios.get(
-        `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=7085ae97-a37c-4ad1-a6d1-ef26c269158d`
-      );
-      const thesaurusData = thesaurusResponse.data[0];
-
-      let synonyms = thesaurusData.meta.syns.join(", ");
-      let antonyms = thesaurusData.meta.ants.join(", ");
-
-      saveTerm(word, definitions, synonyms, antonyms);
-
-      updateSearches(word);
-
-      res.locals.header = "header";
-      res.render("definition", {
-        word: word,
-        meanings: meanings,
-        thesaurusData: thesaurusData,
         recentSearches: recentSearches,
       });
     }
