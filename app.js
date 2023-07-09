@@ -236,6 +236,7 @@ app.post("/", async (req, res, next) => {
         : "No antonyms found"; // Get the first 5 antonyms
 
     saveTerm(word, definitions, synonyms, antonyms, partOfSpeech);
+    updateSearches(word);
 
     res.redirect(`/term/${word}`);
   } catch (error) {
