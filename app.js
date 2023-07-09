@@ -187,6 +187,7 @@ app.get("/sitemap.xml", async (req, res) => {
     res.status(500).send("An error occurred while generating the sitemap.");
   }
 });
+
 app.post("/", async (req, res, next) => {
   const word = req.body.word.toLowerCase();
   try {
@@ -196,16 +197,12 @@ app.post("/", async (req, res, next) => {
     const data = response.data[0];
 
     let definitions = [];
-    let partOfSpeech = []; // add this to store the parts of speech
-
     data.meanings.forEach((item) => {
-      partOfSpeech.push(item.partOfSpeech); // update this line to get the part of speech
       item.definitions.forEach((def) => {
         definitions.push(def.definition);
       });
     });
     definitions = definitions.join(", ");
-    partOfSpeech = partOfSpeech.join(", "); // join all parts of speech with a comma
 
     const thesaurusResponse = await axios.get(
       `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=7085ae97-a37c-4ad1-a6d1-ef26c269158d`
@@ -215,7 +212,7 @@ app.post("/", async (req, res, next) => {
     let synonyms = thesaurusData.meta.syns.join(", ");
     let antonyms = thesaurusData.meta.ants.join(", ");
 
-    saveTerm(word, definitions, synonyms, antonyms, partOfSpeech); // pass part of speech to saveTerm function
+    saveTerm(word, definitions, synonyms, antonyms);
 
     res.redirect(`/term/${word}`);
   } catch (error) {
@@ -223,19 +220,6 @@ app.post("/", async (req, res, next) => {
     return next(error);
   }
 });
-
-const saveTerm = async (term, definition, synonyms, antonyms, partOfSpeech) => {
-  // add partOfSpeech parameter
-  try {
-    const res = await pool.query(
-      "INSERT INTO terms(term, definition, synonyms, antonyms, partOfSpeech) VALUES($1, $2, $3, $4, $5) RETURNING *", // add $5 placeholder
-      [term, definition, synonyms, antonyms, partOfSpeech] // pass partOfSpeech to query
-    );
-    console.log(res.rows[0]);
-  } catch (err) {
-    console.log(err.stack);
-  }
-};
 
 app.use((err, req, res, next) => {
   console.error(err);
