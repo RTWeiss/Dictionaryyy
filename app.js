@@ -30,7 +30,8 @@ const createTermsTable = async () => {
          term TEXT NOT NULL,
          definition TEXT NOT NULL,
          synonyms TEXT NOT NULL,
-         antonyms TEXT NOT NULL
+         antonyms TEXT NOT NULL,
+         partOfSpeech TEXT NOT NULL
       );
     `);
     console.log("Terms table created or already exists.");
@@ -134,8 +135,10 @@ app.get("/term/:word", async (req, res) => {
 
       res.render("definition", {
         word: word,
-        meanings: [{ definitions: definitions, partOfSpeech: "N/A" }], // Assuming partOfSpeech as 'N/A' for simplicity
-        thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }], // Assuming antonyms need to be displayed
+        meanings: [
+          { definitions: definitions, partOfSpeech: dbData.partOfSpeech },
+        ],
+        thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
         recentSearches: recentSearches,
       });
     }
@@ -161,11 +164,11 @@ const updateSearches = (word) => {
   }
 };
 
-const saveTerm = async (term, definition, synonyms, antonyms) => {
+const saveTerm = async (term, definition, synonyms, antonyms, partOfSpeech) => {
   try {
     const res = await pool.query(
-      "INSERT INTO terms(term, definition, synonyms, antonyms) VALUES($1, $2, $3, $4) RETURNING *",
-      [term, definition, synonyms, antonyms]
+      "INSERT INTO terms(term, definition, synonyms, antonyms, partOfSpeech) VALUES($1, $2, $3, $4, $5) RETURNING *",
+      [term, definition, synonyms, antonyms, partOfSpeech]
     );
     console.log(res.rows[0]);
   } catch (err) {
