@@ -178,10 +178,18 @@ const updateSearches = async (word) => {
 const saveTerm = async (term, definition, synonyms, antonyms, partOfSpeech) => {
   try {
     const res = await pool.query(
-      "INSERT INTO terms(term, definition, synonyms, antonyms, partOfSpeech) VALUES($1, $2, $3, $4, $5) RETURNING *",
+      `INSERT INTO terms(term, definition, synonyms, antonyms, partOfSpeech)
+       SELECT $1, $2, $3, $4, $5
+       WHERE NOT EXISTS (SELECT 1 FROM terms WHERE term = $1)
+       RETURNING *`,
       [term, definition, synonyms, antonyms, partOfSpeech]
     );
-    console.log(res.rows[0]);
+
+    if (res.rows.length > 0) {
+      console.log("Term saved to the database.");
+    } else {
+      console.log("Term already exists in the database.");
+    }
   } catch (err) {
     console.log(err.stack);
   }
