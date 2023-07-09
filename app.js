@@ -29,9 +29,9 @@ const createTermsTable = async () => {
       CREATE TABLE IF NOT EXISTS terms (
          id SERIAL PRIMARY KEY,
          term TEXT NOT NULL,
-         definition JSONB,
-         synonyms JSONB,
-         antonyms JSONB
+         definition TEXT NOT NULL,
+         synonyms TEXT NOT NULL,
+         antonyms TEXT NOT NULL
       );
     `);
     console.log("Terms table created or already exists.");
