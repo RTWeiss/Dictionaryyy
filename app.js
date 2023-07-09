@@ -40,6 +40,19 @@ const createTermsTable = async () => {
   }
 };
 
+const initializeDatabase = async () => {
+  try {
+    await createTermsTable();
+    console.log("Database initialization completed.");
+  } catch (err) {
+    console.error("Database initialization failed: ", err.stack);
+    process.exit(1); // Exit the process with an error code
+  }
+};
+
+// Call the function to initialize the database when the application starts
+initializeDatabase();
+
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
     if (req.headers["x-forwarded-proto"] != "https") {
