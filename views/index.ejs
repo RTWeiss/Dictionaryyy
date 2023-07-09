@@ -1,19 +1,102 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Definition Search | Find a Definition - Dictionaryyy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
       rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
     />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #0056b3;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      header {
+        background-color: #0056b3;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        width: 100%;
+      }
+
+      h1 {
+        margin: 0;
+        color: #fff;
+        font-size: 28px;
+      }
+
+      nav {
+        margin-top: 20px;
+      }
+
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      nav ul li {
+        margin: 0 10px;
+      }
+
+      nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s ease;
+      }
+
+      nav ul li a:hover {
+        color: #f0f0f0;
+      }
+
+      #content {
+        max-width: 600px;
+        width: 90%;
+        margin-top: 40px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h2 {
+        color: #666;
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+    </style>
   </head>
-  <body class="d-flex flex-column min-vh-100">
-    <header class="bg-primary text-white text-center py-3 mb-4">
-      <p class="h2 mb-0">Dictionaryyy</p>
+  <body>
+    <header class="bg-primary text-white p-3 text-center">
+      <h1 class="h2 mb-3">Dictionaryyy</h1>
       <nav>
-        <ul class="nav justify-content-center py-2 mb-0">
+        <ul class="nav justify-content-center">
           <li class="nav-item">
             <a class="nav-link text-white" href="/">Home</a>
           </li>
@@ -23,90 +106,99 @@
         </ul>
       </nav>
     </header>
-    <main class="container">
-      <div class="bg-white shadow rounded p-3 mb-4">
-        <h2 class="text-center text-muted">Search for a Definition</h2>
-        <form method="POST" class="input-group my-3">
-          <input
-            type="text"
-            name="word"
-            class="form-control"
-            placeholder="Enter a word"
-          />
-          <button type="submit" class="btn btn-primary">Search</button>
-        </form>
 
-        <!-- Recent Searches and Most Popular Searches -->
-        <div class="row">
-          <!-- Recent Searches -->
-          <div class="col-md-6">
-            <div class="card my-3">
-              <div class="card-header">
-                <h5 class="card-title">Recent Searches</h5>
+    <div class="container mt-4">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card bg-white rounded shadow p-4 text-center">
+            <h2 class="text-muted">Search for a Definition</h2>
+            <form method="POST" class="input-group my-3">
+              <input
+                type="text"
+                name="word"
+                class="form-control"
+                placeholder="Enter a word"
+              />
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
               </div>
-              <div class="card-body">
-                <% if (recentSearches.length > 0) { %>
-                <ul class="list-unstyled">
-                  <% recentSearches.forEach(function(search) { %>
-                  <li>
-                    <a href="/term/<%= search %>"
-                      ><%= search.charAt(0).toUpperCase() + search.slice(1)
-                      %></a
-                    >
-                  </li>
-                  <% }); %>
-                </ul>
-                <% } else { %>
-                <p>No recent searches found.</p>
-                <% } %>
+            </form>
+
+            <!-- Recent Searches and Most Popular Searches -->
+            <div class="row">
+              <!-- Recent Searches -->
+              <div class="col-md-6">
+                <div class="card my-3">
+                  <div class="card-header">
+                    <h5 class="card-title">Recent Searches</h5>
+                  </div>
+                  <div class="card-body">
+                    <% if (recentSearches.length > 0) { %>
+                    <ul class="list-unstyled">
+                      <% recentSearches.forEach(function(search) { %>
+                      <li>
+                        <a href="/term/<%= search %>"
+                          ><%= search.charAt(0).toUpperCase() + search.slice(1)
+                          %></a
+                        >
+                      </li>
+                      <% }); %>
+                    </ul>
+                    <% } else { %>
+                    <p>No recent searches found.</p>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Most Popular Searches -->
+              <div class="col-md-6">
+                <div class="card my-3">
+                  <div class="card-header">
+                    <h5 class="card-title">Most Popular Searches</h5>
+                  </div>
+                  <div class="card-body">
+                    <% if (popularSearches.length > 0) { %>
+                    <ul class="list-unstyled">
+                      <% popularSearches.forEach(function(search) { %> <% const
+                      searchCount = searchCounts[search] || 0; %>
+                      <li>
+                        <a href="/term/<%= search %>">
+                          <%= search.charAt(0).toUpperCase() + search.slice(1)
+                          %>
+                        </a>
+                        <span class="badge badge-secondary ml-2"
+                          ><%= searchCount %></span
+                        >
+                      </li>
+                      <% }); %>
+                    </ul>
+                    <% } else { %>
+                    <p>No popular searches found.</p>
+                    <% } %>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Most Popular Searches -->
-          <div class="col-md-6">
+            <% if (typeof definitions !== 'undefined' && definitions.length > 0)
+            { %> <% definitions.forEach(function(def) { %>
             <div class="card my-3">
               <div class="card-header">
-                <h5 class="card-title">Most Popular Searches</h5>
+                <h5 class="card-title"><%= def.title %></h5>
               </div>
               <div class="card-body">
-                <% if (popularSearches.length > 0) { %>
-                <ul class="list-unstyled">
-                  <% popularSearches.forEach(function(search) { %> <% const
-                  searchCount = searchCounts[search] || 0; %>
-                  <li>
-                    <a href="/term/<%= search %>">
-                      <%= search.charAt(0).toUpperCase() + search.slice(1) %>
-                    </a>
-                    <span class="badge bg-secondary ms-2"
-                      ><%= searchCount %></span
-                    >
-                  </li>
-                  <% }); %>
-                </ul>
-                <% } else { %>
-                <p>No popular searches found.</p>
-                <% } %>
+                <p class="card-text"><%= def.description %></p>
               </div>
             </div>
+            <% }); %> <% } %>
+
+            <div id="result"></div>
           </div>
         </div>
-
-        <% if (typeof definitions !== 'undefined' && definitions.length > 0) {
-        %> <% definitions.forEach(function(def) { %>
-        <div class="card my-3">
-          <div class="card-header">
-            <h5 class="card-title"><%= def.title %></h5>
-          </div>
-          <div class="card-body">
-            <p class="card-text"><%= def.description %></p>
-          </div>
-        </div>
-        <% }); %> <% } %>
-
-        <div id="result"></div>
       </div>
-    </main>
+    </div>
+
     <script src="/js/main.js"></script>
   </body>
 </html>
