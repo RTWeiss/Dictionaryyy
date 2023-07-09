@@ -74,26 +74,36 @@ app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Generate dynamic sitemap based on files in the term folder
-const generateSitemap = () => {
-  const files = fs.readdirSync(termPath);
-  const urls = files.map((file) => {
-    const fileName = path.basename(file, path.extname(file));
-    return `https://dictionaryyy.com/term/${fileName}`;
-  });
-  const sitemap = urls.map((url) => `<url><loc>${url}</loc></url>`).join("\n");
-  return `<?xml version="1.0" encoding="UTF-8"?>
+// Generate dynamic sitemap based on terms in the database
+const generateSitemap = async () => {
+  try {
+    const dbResponse = await pool.query("SELECT term FROM terms");
+    const terms = dbResponse.rows.map((row) => row.term);
+    const urls = terms.map((term) => {
+      return `https://dictionaryyy.com/term/${encodeURIComponent(term)}`;
+    });
+    const sitemap = urls
+      .map((url) => `<url><loc>${url}</loc></url>`)
+      .join("\n");
+    return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemap}
 </urlset>`;
+  } catch (err) {
+    console.error(err.stack);
+    return null;
+  }
 };
 
-// Generate a sorted array of terms in the term folder
-const getSortedTerms = () => {
-  const files = fs.readdirSync(termPath);
-  return files
-    .map((file) => path.basename(file, path.extname(file)))
-    .sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+// Generate a sorted array of terms in the database
+const getSortedTerms = async () => {
+  try {
+    const dbResponse = await pool.query("SELECT term FROM terms ORDER BY term");
+    return dbResponse.rows.map((row) => row.term);
+  } catch (err) {
+    console.error(err.stack);
+    return [];
+  }
 };
 
 app.get("/", (req, res) => {
@@ -185,15 +195,19 @@ const saveTerm = async (term, definition, synonyms, antonyms) => {
   }
 };
 
-app.get("/glossary", (req, res) => {
-  const terms = getSortedTerms();
+app.get("/glossary", async (req, res) => {
+  const terms = await getSortedTerms();
   res.render("glossary", { terms });
 });
 
-app.get("/sitemap.xml", (req, res) => {
-  const sitemap = generateSitemap();
-  res.header("Content-Type", "application/xml");
-  res.send(sitemap);
+app.get("/sitemap.xml", async (req, res) => {
+  const sitemap = await generateSitemap();
+  if (sitemap) {
+    res.header("Content-Type", "application/xml");
+    res.send(sitemap);
+  } else {
+    res.status(500).send("An error occurred while generating the sitemap.");
+  }
 });
 
 app.post("/", async (req, res, next) => {
