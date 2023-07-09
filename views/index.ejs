@@ -4,10 +4,8 @@
     <title>Definition Search | Find a Definition - Dictionaryyy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
     />
 
     <style>
@@ -119,9 +117,7 @@
                 class="form-control"
                 placeholder="Enter a word"
               />
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Search</button>
-              </div>
+              <button type="submit" class="btn btn-primary">Search</button>
             </form>
 
             <!-- Recent Searches and Most Popular Searches -->
@@ -167,7 +163,7 @@
                           <%= search.charAt(0).toUpperCase() + search.slice(1)
                           %>
                         </a>
-                        <span class="badge badge-secondary ml-2"
+                        <span class="badge bg-secondary ms-2"
                           ><%= searchCount %></span
                         >
                       </li>
