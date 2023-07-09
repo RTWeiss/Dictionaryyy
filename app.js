@@ -127,16 +127,15 @@ app.get("/term/:word", async (req, res) => {
     if (dbData) {
       // If term exists in the database, render the page with the database data
       let synonyms = dbData.synonyms.split(", ");
-      let antonyms = dbData.antonyms.split(", ");
-      let definitions = dbData.definition.split(", ");
+      let antonyms = dbData.antonyms.split(", "); // Assuming antonyms are split with comma
+      let definitions = dbData.definition
+        .split(", ")
+        .map((def) => ({ definition: def }));
 
       res.render("definition", {
         word: word,
-        meanings: definitions,
-        thesaurusData: {
-          synonyms: synonyms,
-          antonyms: antonyms,
-        },
+        meanings: [{ definitions: definitions, partOfSpeech: "N/A" }], // Assuming partOfSpeech as 'N/A' for simplicity
+        thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }], // Assuming antonyms need to be displayed
         recentSearches: recentSearches,
       });
     }
