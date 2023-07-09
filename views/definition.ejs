@@ -223,6 +223,18 @@
             <p>No Synonyms found for the word</p>
             <% } %>
           </ul>
+          <p></p>
+          <!-- Antonyms section -->
+          <h2 class="text-primary">Antonyms</h2>
+          <ul class="list-group">
+            <% if (thesaurusData && thesaurusData[0] && thesaurusData[0].meta &&
+            thesaurusData[0].meta.ants && thesaurusData[0].meta.ants[0]) { %> <%
+            thesaurusData[0].meta.ants[0].forEach(antonym => { %>
+            <li class="list-group-item"><%= antonym %></li>
+            <% }) %> <% } else { %>
+            <p>No Antonyms found for the word</p>
+            <% } %>
+          </ul>
         </div>
       </div>
     </div>
