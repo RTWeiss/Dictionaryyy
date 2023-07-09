@@ -212,8 +212,14 @@ app.post("/", async (req, res, next) => {
     );
     const thesaurusData = thesaurusResponse.data[0];
 
-    let synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", "); // Get the first 5 synonyms
-    let antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", "); // Get the first 5 antonyms
+    let synonyms =
+      thesaurusData.meta.syns && thesaurusData.meta.syns[0]
+        ? thesaurusData.meta.syns[0].slice(0, 5).join(", ")
+        : "No synonyms found"; // Get the first 5 synonyms
+    let antonyms =
+      thesaurusData.meta.ants && thesaurusData.meta.ants[0]
+        ? thesaurusData.meta.ants[0].slice(0, 5).join(", ")
+        : "No antonyms found"; // Get the first 5 antonyms
 
     saveTerm(word, definitions, synonyms, antonyms, partOfSpeech);
 
