@@ -215,7 +215,7 @@ app.post("/", async (req, res, next) => {
 
     saveTerm(word, definitions, synonyms, antonyms);
 
-    res.redirect(url);
+    res.redirect(`/term/${word}`);
   } catch (error) {
     console.error(error);
     return next(error);
