@@ -178,8 +178,14 @@ const saveTerm = async (term, definition, synonyms, antonyms) => {
   try {
     const res = await pool.query(
       "INSERT INTO terms(term, definition, synonyms, antonyms) VALUES($1, $2, $3, $4) RETURNING *",
-      [term, definition, synonyms, antonyms]
+      [
+        term,
+        JSON.stringify(definition),
+        JSON.stringify(synonyms),
+        JSON.stringify(antonyms),
+      ]
     );
+
     console.log(res.rows[0]);
   } catch (err) {
     console.log(err.stack);
