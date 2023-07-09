@@ -137,19 +137,28 @@ app.get("/term/:word", async (req, res) => {
         recentSearches: recentSearches,
       });
     } else {
-      // If term does not exist in the database, fetch it from the API and save it to the database
       const response = await axios.get(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
       );
       const data = response.data[0];
-      const meanings = data.meanings;
+
+      let definitions = [];
+      data.meanings.forEach((item) => {
+        item.definitions.forEach((def) => {
+          definitions.push(def.definition);
+        });
+      });
+      definitions = definitions.join(", ");
 
       const thesaurusResponse = await axios.get(
         `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=7085ae97-a37c-4ad1-a6d1-ef26c269158d`
       );
-      const thesaurusData = thesaurusResponse.data;
+      const thesaurusData = thesaurusResponse.data[0];
 
-      saveTerm(word, meanings, thesaurusData.synonyms, thesaurusData.antonyms);
+      let synonyms = thesaurusData.meta.syns.join(", ");
+      let antonyms = thesaurusData.meta.ants.join(", ");
+
+      saveTerm(word, definitions, synonyms, antonyms);
 
       updateSearches(word);
 
@@ -218,21 +227,23 @@ app.post("/", async (req, res, next) => {
     );
     const data = response.data[0];
 
+    let definitions = [];
+    data.meanings.forEach((item) => {
+      item.definitions.forEach((def) => {
+        definitions.push(def.definition);
+      });
+    });
+    definitions = definitions.join(", ");
+
     const thesaurusResponse = await axios.get(
       `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=7085ae97-a37c-4ad1-a6d1-ef26c269158d`
     );
-    const thesaurusData = thesaurusResponse.data;
+    const thesaurusData = thesaurusResponse.data[0];
 
-    updateSearches(word);
+    let synonyms = thesaurusData.meta.syns.join(", ");
+    let antonyms = thesaurusData.meta.ants.join(", ");
 
-    const url = `/term/${word}`;
-
-    saveTerm(
-      word,
-      data.meanings,
-      thesaurusData.synonyms,
-      thesaurusData.antonyms
-    );
+    saveTerm(word, definitions, synonyms, antonyms);
 
     res.redirect(url);
   } catch (error) {
