@@ -33,6 +33,11 @@ const createTermsTable = async () => {
          antonyms TEXT NOT NULL,
          partOfSpeech TEXT NOT NULL
       );
+            
+      CREATE TABLE IF NOT EXISTS recent_searches (
+        id SERIAL PRIMARY KEY,
+        term TEXT NOT NULL
+      );
     `);
     console.log("Terms table created or already exists.");
   } catch (err) {
@@ -147,13 +152,19 @@ app.get("/term/:word", async (req, res) => {
     res.status(500).send("An error occurred while fetching the data.");
   }
 });
-
-const updateSearches = (word) => {
+const updateSearches = async (word) => {
   if (!recentSearches.includes(word)) {
     recentSearches.unshift(word);
     if (recentSearches.length > MAX_RECENT_SEARCHES) {
       recentSearches.pop();
     }
+  }
+
+  try {
+    await pool.query("INSERT INTO recent_searches (term) VALUES ($1)", [word]);
+    console.log("Recent search term saved to the database.");
+  } catch (err) {
+    console.error(err.stack);
   }
 
   // Increment search count for the word
