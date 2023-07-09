@@ -1,150 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>
       Definition of <%= word.charAt(0).toUpperCase() + word.slice(1) %> | What
       Does <%= word.charAt(0).toUpperCase() + word.slice(1) %> Mean?
     </title>
     <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
     />
-    <style>
-      :root {
-        --blue: #0056b3;
-        --light-blue: #6b9fd1;
-        --light-grey: #f9f9f9;
-        --dark-grey: #666;
-        --white: #fff;
-        --black: #000;
-        --transition-speed: 0.3s;
-        --base-font-size: 16px;
-        --base-padding: 10px;
-        --base-margin: 10px;
-      }
-
-      * {
-        box-sizing: border-box;
-        font-family: "Roboto", Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        background-color: var(--light-grey);
-        color: var(--blue);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-        padding: var(--base-padding);
-      }
-
-      header {
-        background-color: var(--blue);
-        color: var(--white);
-        padding: 2 * var(--base-padding);
-        text-align: center;
-        width: 100%;
-        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
-      }
-
-      header p {
-        font-size: 1.75rem;
-        font-weight: 500;
-      }
-
-      nav ul {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        padding-top: 2 * var(--base-padding);
-      }
-
-      nav ul li {
-        margin: 0 var(--base-margin);
-      }
-
-      nav ul li a {
-        color: var(--white);
-        text-decoration: none;
-        font-size: 1rem;
-        transition: color var(--transition-speed) ease;
-      }
-
-      nav ul li a:hover {
-        color: var(--light-blue);
-      }
-
-      #content {
-        max-width: 37.5rem;
-        width: 100%;
-        margin-top: 2.5rem;
-        padding: var(--base-padding);
-        background-color: var(--white);
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 4px rgba(var(--black), 0.1);
-      }
-
-      h1,
-      h2 {
-        color: var(--blue);
-      }
-
-      h1 {
-        font-size: 1.75rem;
-        margin-bottom: 1.25rem;
-      }
-
-      h2 {
-        font-size: 1.25rem;
-        margin-bottom: 0.625rem;
-        color: var(--dark-grey);
-      }
-
-      p {
-        font-size: 1rem;
-        line-height: 1.5;
-      }
-
-      /* Mobile Styles */
-      @media only screen and (max-width: 37.5em) {
-        #sidebar {
-          width: 100%;
-          margin-bottom: 2rem;
-        }
-
-        #main-content {
-          width: 100%;
-        }
-      }
-
-      /* Desktop Styles */
-      @media only screen and (min-width: 37.5em) {
-        #content {
-          display: flex;
-          gap: 1rem;
-        }
-
-        #sidebar {
-          flex: 1;
-          border-right: 1px solid var(--dark-grey);
-          padding-right: var(--base-padding);
-        }
-
-        #main-content {
-          flex: 3;
-        }
-      }
-    </style>
   </head>
-  <body>
-    <header class="bg-primary text-white p-3 text-center">
-      <p class="m-0 h2">Dictionaryyy</p>
+  <body class="d-flex flex-column min-vh-100">
+    <header class="bg-primary text-white text-center py-3 mb-4">
+      <p class="h2 mb-0">Dictionaryyy</p>
       <nav>
-        <ul class="nav justify-content-center py-2">
+        <ul class="nav justify-content-center py-2 mb-0">
           <li class="nav-item">
             <a class="nav-link text-white" href="/">Home</a>
           </li>
@@ -154,26 +26,24 @@
         </ul>
       </nav>
     </header>
-    <div class="container my-4 bg-white p-3 rounded shadow">
-      <center><h2 class="text-muted">Search for a Definition</h2></center>
-      <form method="POST" action="/" class="mb-4">
-        <div class="input-group">
-          <input
-            type="text"
-            name="word"
-            class="form-control"
-            placeholder="Enter Word"
-          />
-          <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">Search</button>
+    <main class="container">
+      <div class="bg-white shadow rounded p-3 mb-4">
+        <h2 class="text-center text-muted">Search for a Definition</h2>
+        <form method="POST" action="/">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              name="word"
+              class="form-control"
+              placeholder="Enter Word"
+            />
+            <button class="btn btn-primary" type="submit">Search</button>
           </div>
-        </div>
-      </form>
-    </div>
-    <div class="container my-4 bg-white p-3 rounded shadow">
-      <div class="row">
-        <div class="col-md-9">
-          <div>
+        </form>
+      </div>
+      <div class="bg-white shadow rounded p-3">
+        <div class="row">
+          <div class="col-lg-9">
             <h1 class="text-primary">
               <%= word.charAt(0).toUpperCase() + word.slice(1) %>
             </h1>
@@ -183,15 +53,13 @@
               <div class="card-header">
                 <h2 class="text-secondary"><%= meaning.partOfSpeech %></h2>
               </div>
-              <div class="row card-body">
-                <div class="card-body">
-                  <% if (meaning.definitions && meaning.definitions.length > 0)
-                  { %> <% meaning.definitions.forEach(function(def) { %>
-                  <li class="card-text"><%= def.definition %></li>
-                  <% }); %> <% } else { %>
-                  <p>No definitions found.</p>
-                  <% } %>
-                </div>
+              <div class="card-body">
+                <% if (meaning.definitions && meaning.definitions.length > 0) {
+                %> <% meaning.definitions.forEach(function(def) { %>
+                <li class="card-text"><%= def.definition %></li>
+                <% }); %> <% } else { %>
+                <p>No definitions found.</p>
+                <% } %>
               </div>
             </div>
             <% }); %> <% } else { %>
@@ -200,43 +68,40 @@
             <p>Word not found in the dictionary.</p>
             <% } %>
           </div>
-        </div>
-        <div class="col-md-3">
-          <h2 class="text-primary">Recent Searches</h2>
-          <ul class="list-group">
-            <% recentSearches.forEach(function(search) { %>
-            <li class="list-group-item">
-              <a href="/term/<%= search %>"
-                ><%= search.charAt(0).toUpperCase() + search.slice(1) %></a
-              >
-            </li>
-            <% }); %>
-          </ul>
-          <p></p>
-          <h2 class="text-primary">Synonyms</h2>
-          <ul class="list-group">
-            <% if (thesaurusData && thesaurusData[0] && thesaurusData[0].meta &&
-            thesaurusData[0].meta.syns && thesaurusData[0].meta.syns[0]) { %> <%
-            thesaurusData[0].meta.syns[0].forEach(synonym => { %>
-            <li class="list-group-item"><%= synonym %></li>
-            <% }) %> <% } else { %>
-            <p>No Synonyms found for the word</p>
-            <% } %>
-          </ul>
-          <p></p>
-          <!-- Antonyms section -->
-          <h2 class="text-primary">Antonyms</h2>
-          <ul class="list-group">
-            <% if (thesaurusData && thesaurusData[0] && thesaurusData[0].meta &&
-            thesaurusData[0].meta.ants && thesaurusData[0].meta.ants[0]) { %> <%
-            thesaurusData[0].meta.ants[0].forEach(antonym => { %>
-            <li class="list-group-item"><%= antonym %></li>
-            <% }) %> <% } else { %>
-            <p>No Antonyms found for the word</p>
-            <% } %>
-          </ul>
+          <div class="col-lg-3">
+            <h2 class="text-primary">Recent Searches</h2>
+            <ul class="list-group mb-3">
+              <% recentSearches.forEach(function(search) { %>
+              <li class="list-group-item">
+                <a href="/term/<%= search %>">
+                  <%= search.charAt(0).toUpperCase() + search.slice(1) %>
+                </a>
+              </li>
+              <% }); %>
+            </ul>
+            <h2 class="text-primary">Synonyms</h2>
+            <ul class="list-group mb-3">
+              <% if (thesaurusData && thesaurusData[0] && thesaurusData[0].meta
+              && thesaurusData[0].meta.syns && thesaurusData[0].meta.syns[0]) {
+              %> <% thesaurusData[0].meta.syns[0].forEach(synonym => { %>
+              <li class="list-group-item"><%= synonym %></li>
+              <% }) %> <% } else { %>
+              <p>No Synonyms found for the word</p>
+              <% } %>
+            </ul>
+            <h2 class="text-primary">Antonyms</h2>
+            <ul class="list-group">
+              <% if (thesaurusData && thesaurusData[0] && thesaurusData[0].meta
+              && thesaurusData[0].meta.ants && thesaurusData[0].meta.ants[0]) {
+              %> <% thesaurusData[0].meta.ants[0].forEach(antonym => { %>
+              <li class="list-group-item"><%= antonym %></li>
+              <% }) %> <% } else { %>
+              <p>No Antonyms found for the word</p>
+              <% } %>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   </body>
 </html>
