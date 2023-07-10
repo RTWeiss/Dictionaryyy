@@ -177,6 +177,7 @@ app.get("/term/:word", async (req, res) => {
     res.status(500).send("An error occurred while fetching the data.");
   }
 });
+
 const updateSearches = async (word) => {
   if (!recentSearches.includes(word)) {
     recentSearches.unshift(word);
