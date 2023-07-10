@@ -168,34 +168,15 @@ app.get("/term/:word", async (req, res) => {
         thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
         recentSearches: recentSearches,
       });
+    } else {
+      // If term doesn't exist in the database, redirect to the search route
+      res.redirect(`/?word=${encodeURIComponent(word)}`);
     }
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching the data.");
   }
 });
-const updateSearches = async (word) => {
-  if (!recentSearches.includes(word)) {
-    recentSearches.unshift(word);
-    if (recentSearches.length > MAX_RECENT_SEARCHES) {
-      recentSearches.pop();
-    }
-  }
-
-  try {
-    await pool.query("INSERT INTO recent_searches (term) VALUES ($1)", [word]);
-    console.log("Recent search term saved to the database.");
-  } catch (err) {
-    console.error(err.stack);
-  }
-
-  // Increment search count for the word
-  if (searchCounts[word]) {
-    searchCounts[word]++;
-  } else {
-    searchCounts[word] = 1;
-  }
-};
 
 const saveTerm = async (term, definition, synonyms, antonyms, partOfSpeech) => {
   try {
