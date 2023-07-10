@@ -90,32 +90,41 @@
               </li>
               <% }); %>
             </ul>
-            <div class="card-body">
-              <h4>Synonyms:</h4>
-              <ul>
-                <% data.meta.syns[0].forEach(function(syn) { %>
-                <% if (recentSearches.includes(syn)) { %>
-                <li>
-                  <a href="/term/<%= syn %>"><%= syn %></a>
-                </li>
-                <% } else { %>
-                <li><%= syn %></li>
-                <% } %>
-                <% }); %>
-              </ul>
-              <h4>Antonyms:</h4>
-              <ul>
-                <% data.meta.ants[0].forEach(function(ant) { %>
-                <% if (recentSearches.includes(ant)) { %>
-                <li>
-                  <a href="/term/<%= ant %>"><%= ant %></a>
-                </li>
-                <% } else { %>
-                <li><%= ant %></li>
-                <% } %>
-                <% }); %>
-              </ul>
+            <% if (thesaurusData && thesaurusData.meta &&
+            thesaurusData.meta.syns && thesaurusData.meta.ants) { %>
+            <div class="card my-3">
+              <div class="card-header">
+                <h2 class="text-secondary">Thesaurus</h2>
+              </div>
+              <div class="card-body">
+                <h4>Synonyms:</h4>
+                <ul>
+                  <% thesaurusData.meta.syns[0].forEach(function(syn) { %> <% if
+                  (recentSearches.includes(syn)) { %>
+                  <li>
+                    <a href="/term/<%= syn %>"><%= syn %></a>
+                  </li>
+                  <% } else { %>
+                  <li><%= syn %></li>
+                  <% } %> <% }); %>
+                </ul>
+                <h4>Antonyms:</h4>
+                <ul>
+                  <% thesaurusData.meta.ants[0].forEach(function(ant) { %> <% if
+                  (recentSearches.includes(ant)) { %>
+                  <li>
+                    <a href="/term/<%= ant %>"><%= ant %></a>
+                  </li>
+                  <% } else { %>
+                  <li><%= ant %></li>
+                  <% } %> <% }); %>
+                </ul>
+              </div>
             </div>
+            <% } else { %>
+            <p>No thesaurus data found for the word <%= word %>.</p>
+            <% } %>
+          </div>
         </div>
       </div>
     </main>
