@@ -232,24 +232,23 @@ app.post("/", async (req, res, next) => {
   const word = req.body.word.toLowerCase();
   try {
     const response = await axios.get(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+      `https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
     );
     const data = response.data[0];
 
     let definitions = [];
     let partOfSpeech = [];
 
-    data.meanings.forEach((item) => {
-      partOfSpeech.push(item.partOfSpeech);
-      item.definitions.forEach((def) => {
-        definitions.push(def.definition);
-      });
+    data.def.forEach((item) => {
+      partOfSpeech.push(item.fl); // updated field name based on Merriam-Webster API response
+      definitions.push(item.dt[0]["#text"]); // updated field name based on Merriam-Webster API response
     });
+
     definitions = definitions.join(", ");
     partOfSpeech = partOfSpeech.join(", ");
 
     const thesaurusResponse = await axios.get(
-      `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=7085ae97-a37c-4ad1-a6d1-ef26c269158d`
+      `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
     );
     const thesaurusData = thesaurusResponse.data[0];
 
