@@ -97,7 +97,7 @@
               > 0) { thesaurusData[0].meta.syns[0].forEach(function(synonym,
               index) { %>
               <li class="list-group-item">
-                <% if (synonymExists[index]) { %>
+                <% if (synonyms.includes(synonym)) { %>
                 <a href="/term/<%= synonym %>"><%= synonym %></a>
                 <% } else { %> <%= synonym %> <% } %>
               </li>
