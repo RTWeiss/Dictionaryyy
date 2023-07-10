@@ -235,34 +235,35 @@ app.post("/", async (req, res, next) => {
   const word = req.body.word.toLowerCase();
   try {
     const response = await axios.get(
-      `https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
+      `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
     );
     const data = response.data[0];
 
     let definitions = [];
-    let partOfSpeech = [];
+    let partOfSpeech = "";
 
-    data.def.forEach((item) => {
-      partOfSpeech.push(item.fl); // updated field name based on Merriam-Webster API response
-      definitions.push(item.dt[0]["#text"]); // updated field name based on Merriam-Webster API response
-    });
+    if (data.fl) {
+      partOfSpeech = data.fl; // field name is 'fl' for partOfSpeech
+    }
 
-    definitions = definitions.join(", ");
-    partOfSpeech = partOfSpeech.join(", ");
+    if (data.shortdef) {
+      definitions = data.shortdef.join(", "); // 'shortdef' is the correct field name for definitions
+    }
 
     const thesaurusResponse = await axios.get(
-      `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=${API_KEY}`
+      `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=${API_KEY}`
     );
     const thesaurusData = thesaurusResponse.data[0];
 
-    let synonyms =
-      thesaurusData.meta.syns && thesaurusData.meta.syns[0]
-        ? thesaurusData.meta.syns[0].slice(0, 5).join(", ")
-        : "No synonyms found"; // Get the first 5 synonyms
-    let antonyms =
-      thesaurusData.meta.ants && thesaurusData.meta.ants[0]
-        ? thesaurusData.meta.ants[0].slice(0, 5).join(", ")
-        : "No antonyms found"; // Get the first 5 antonyms
+    let synonyms = "No synonyms found";
+    let antonyms = "No antonyms found";
+
+    if (thesaurusData.meta && thesaurusData.meta.syns[0]) {
+      synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", "); // Get the first 5 synonyms
+    }
+    if (thesaurusData.meta && thesaurusData.meta.ants[0]) {
+      antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", "); // Get the first 5 antonyms
+    }
 
     saveTerm(word, definitions, synonyms, antonyms, partOfSpeech);
     updateSearches(word);
