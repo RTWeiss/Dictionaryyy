@@ -118,7 +118,16 @@ app.get("/", (req, res) => {
     .sort((a, b) => b[1] - a[1])
     .slice(0, MAX_POPULAR_SEARCHES)
     .map((entry) => entry[0]);
-  res.render("index", { recentSearches, popularSearches, searchCounts });
+
+  const randomWord =
+    wordsOfTheDay[Math.floor(Math.random() * wordsOfTheDay.length)];
+
+  res.render("index", {
+    recentSearches,
+    popularSearches,
+    searchCounts,
+    randomWord,
+  });
 });
 
 app.get("/term/:word", async (req, res) => {
