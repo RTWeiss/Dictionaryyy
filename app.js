@@ -10,6 +10,9 @@ const { parse } = require("pg-connection-string");
 const { Pool } = require("pg");
 
 const config = parse(process.env.DATABASE_URL);
+const MERRIAM_WEBSTER_API_KEY = process.env.MERRIAM_WEBSTER_API_KEY;
+const API_KEY = process.env.API_KEY;
+
 config.ssl = { rejectUnauthorized: false };
 
 const pool = new Pool(config);
@@ -232,7 +235,7 @@ app.post("/", async (req, res, next) => {
   const word = req.body.word.toLowerCase();
   try {
     const response = await axios.get(
-      `https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${process.env.MERRIAM_WEBSTER_API_KEY}`
+      `https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
     );
     const data = response.data[0];
 
