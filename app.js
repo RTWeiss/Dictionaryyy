@@ -248,7 +248,7 @@ app.post("/", async (req, res, next) => {
     partOfSpeech = partOfSpeech.join(", ");
 
     const thesaurusResponse = await axios.get(
-      `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
+      `https://dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=${API_KEY}`
     );
     const thesaurusData = thesaurusResponse.data[0];
 
