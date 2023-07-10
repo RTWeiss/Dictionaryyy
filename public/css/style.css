@@ -1,12 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@400;500;700&display=swap");
+
 * {
   box-sizing: border-box;
   transition: all 0.3s ease-in-out;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #e6f4f1; /* Light background color */
-  color: #003338; /* Dark text color */
+  background-color: #f5eee6; /* Beige background color */
+  color: #192a56; /* Dark blue text color */
   margin: 0;
   padding: 0;
   display: flex;
@@ -16,7 +18,7 @@ body {
 }
 
 header {
-  background-color: #02abae; /* Teal header background color */
+  background-color: #192a56; /* Dark blue header background color */
   color: #fff; /* White text for the header */
   padding: 20px;
   text-align: center;
@@ -25,8 +27,9 @@ header {
 
 h1 {
   margin: 0;
-  color: #fff;
+  color: #e27d60; /* Coral color for headings */
   font-size: 2.8rem;
+  font-family: "Roboto Slab", serif;
 }
 
 nav {
@@ -46,13 +49,13 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #fff; /* White text for the links */
+  color: #e8a87c; /* Coral text for the links */
   text-decoration: none;
   font-size: 1.6rem;
 }
 
 nav ul li a:hover {
-  color: #a83900; /* Brown text color on hover */
+  color: #c38d9e; /* Brown text color on hover */
 }
 
 #content {
@@ -67,7 +70,7 @@ nav ul li a:hover {
 }
 
 h2 {
-  color: #666;
+  color: #41b3a3; /* Teal color for sub-headings */
   font-size: 2rem;
   margin-bottom: 10px;
 }
@@ -76,5 +79,5 @@ p {
   margin: 0;
   font-size: 1.6rem;
   line-height: 1.5;
-  color: #003338; /* Dark text color */
+  color: #192a56; /* Dark blue text color */
 }
