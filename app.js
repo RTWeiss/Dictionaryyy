@@ -249,6 +249,8 @@ app.get("/sitemap.xml", async (req, res) => {
 });
 app.post("/", async (req, res, next) => {
   const word = req.body.word.toLowerCase();
+  const { word } = req.body; // Extract the 'word' value from the request body
+
   try {
     const response = await axios.get(
       `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
