@@ -94,8 +94,13 @@
             <ul class="list-group mb-3">
               <% if (thesaurusData && thesaurusData[0].meta.syns &&
               thesaurusData[0].meta.syns[0].length > 0) { %> <%
-              thesaurusData[0].meta.syns[0].forEach(function(synonym) { %>
-              <li class="list-group-item"><%= synonym %></li>
+              thesaurusData[0].meta.syns[0].forEach(function(synonym, index) {
+              %>
+              <li class="list-group-item">
+                <% if (synonymsExist[index]) { %>
+                <a href="/term/<%= synonym %>"><%= synonym %></a>
+                <% } else { %> <%= synonym %> <% } %>
+              </li>
               <% }); %> <% } else { %>
               <p>No synonyms found.</p>
               <% } %>
@@ -104,8 +109,13 @@
             <ul class="list-group mb-3">
               <% if (thesaurusData && thesaurusData[0].meta.ants &&
               thesaurusData[0].meta.ants[0].length > 0) { %> <%
-              thesaurusData[0].meta.ants[0].forEach(function(antonym) { %>
-              <li class="list-group-item"><%= antonym %></li>
+              thesaurusData[0].meta.ants[0].forEach(function(antonym, index) {
+              %>
+              <li class="list-group-item">
+                <% if (antonymsExist[index]) { %>
+                <a href="/term/<%= antonym %>"><%= antonym %></a>
+                <% } else { %> <%= antonym %> <% } %>
+              </li>
               <% }); %> <% } else { %>
               <p>No antonyms found.</p>
               <% } %>
