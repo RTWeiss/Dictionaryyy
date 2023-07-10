@@ -72,21 +72,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-async function termExists(term) {
-  const query = {
-    text: "SELECT 1 FROM terms WHERE word = $1 LIMIT 1",
-    values: [term],
-  };
-
-  try {
-    const res = await pool.query(query);
-    return res.rowCount > 0;
-  } catch (err) {
-    console.error(err);
-    return false;
-  }
-}
-
 const MAX_RECENT_SEARCHES = 5;
 const MAX_POPULAR_SEARCHES = 5; // Maximum number of popular searches to display
 let recentSearches = [];
@@ -221,7 +206,6 @@ const saveTerm = async (term, definition, synonyms, antonyms, partOfSpeech) => {
        RETURNING *`,
       [term, definition, synonyms, antonyms, partOfSpeech]
     );
-    const existsInDatabase = await termExists(word);
 
     if (res.rows.length > 0) {
       console.log("Term saved to the database.");
@@ -249,8 +233,6 @@ app.get("/sitemap.xml", async (req, res) => {
 });
 app.post("/", async (req, res, next) => {
   const word = req.body.word.toLowerCase();
-  const { word } = req.body; // Extract the 'word' value from the request body
-
   try {
     const response = await axios.get(
       `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
