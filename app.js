@@ -169,8 +169,57 @@ app.get("/term/:word", async (req, res) => {
         recentSearches: recentSearches,
       });
     } else {
-      // If term doesn't exist in the database, redirect to the search route
-      res.redirect(`/?word=${encodeURIComponent(word)}`);
+      // If term doesn't exist in the database, perform a new search
+      try {
+        const response = await axios.get(
+          `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
+        );
+        const data = response.data[0];
+
+        let definitions = [];
+        let partOfSpeech = "";
+
+        if (data.fl) {
+          partOfSpeech = data.fl; // field name is 'fl' for partOfSpeech
+        }
+
+        if (data.shortdef) {
+          definitions = data.shortdef.join(", "); // 'shortdef' is the correct field name for definitions
+        }
+
+        const thesaurusResponse = await axios.get(
+          `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=${API_KEY}`
+        );
+        const thesaurusData = thesaurusResponse.data[0];
+
+        let synonyms = "No synonyms found";
+        let antonyms = "No antonyms found";
+
+        if (thesaurusData.meta && thesaurusData.meta.syns[0]) {
+          synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", "); // Get the first 5 synonyms
+        }
+        if (thesaurusData.meta && thesaurusData.meta.ants[0]) {
+          antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", "); // Get the first 5 antonyms
+        }
+
+        saveTerm(word, definitions, synonyms, antonyms, partOfSpeech);
+        updateSearches(word);
+
+        res.render("definition", {
+          word: word,
+          meanings: [
+            {
+              definitions: [{ definition: definitions }],
+              partOfSpeech: partOfSpeech,
+            },
+          ],
+          thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
+          recentSearches: recentSearches,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("An error occurred while fetching the data.");
+      }
     }
   } catch (error) {
     console.error(error);
