@@ -4,7 +4,7 @@ const path = require("path");
 const ejs = require("ejs");
 const fs = require("fs");
 const app = express();
-app.use(express.static(publicPath));
+app.use(express.static("public"));
 require("dotenv").config();
 const { parse } = require("pg-connection-string");
 const { Pool } = require("pg");
