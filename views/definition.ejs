@@ -90,27 +90,32 @@
               </li>
               <% }); %>
             </ul>
-            <% if (thesaurusData && thesaurusData.length > 0) { %> <%
-            thesaurusData.forEach(function(data) { %>
-            <div class="card my-3">
-              <div class="card-header">
-                <h2 class="text-secondary">Thesaurus</h2>
-              </div>
-              <div class="card-body">
-                <h4>Synonyms:</h4>
+            <div class="card-body">
+              <h4>Synonyms:</h4>
+              <ul>
                 <% data.meta.syns[0].forEach(function(syn) { %>
-                <a href="/term/<%= syn %>"><%= syn %></a>
+                <% if (recentSearches.includes(syn)) { %>
+                <li>
+                  <a href="/term/<%= syn %>"><%= syn %></a>
+                </li>
+                <% } else { %>
+                <li><%= syn %></li>
+                <% } %>
                 <% }); %>
-                <h4>Antonyms:</h4>
+              </ul>
+              <h4>Antonyms:</h4>
+              <ul>
                 <% data.meta.ants[0].forEach(function(ant) { %>
-                <a href="/term/<%= ant %>"><%= ant %></a>
+                <% if (recentSearches.includes(ant)) { %>
+                <li>
+                  <a href="/term/<%= ant %>"><%= ant %></a>
+                </li>
+                <% } else { %>
+                <li><%= ant %></li>
+                <% } %>
                 <% }); %>
-              </div>
+              </ul>
             </div>
-            <% }); %> <% } else { %>
-            <p>No thesaurus data found for the word <%= word %>.</p>
-            <% } %>
-          </div>
         </div>
       </div>
     </main>
