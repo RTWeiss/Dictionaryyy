@@ -94,18 +94,12 @@
             <ul class="list-group mb-3">
               <% if (thesaurusData && thesaurusData[0].meta.syns &&
               thesaurusData[0].meta.syns[0].length > 0) { %> <%
-              thesaurusData[0].meta.syns[0].forEach(function(synonym) { %> <%
-              exists(synonym).then(exists => { %>
-              <li class="list-group-item">
-                <% if (exists) { %>
-                <a href="/term/<%= synonym %>"><%= synonym %></a>
-                <% } else { %> <%= synonym %> <% } %>
-              </li>
-              <% }); %> <% }) %> <% } else { %>
+              thesaurusData[0].meta.syns[0].forEach(function(synonym) { %>
+              <li class="list-group-item"><%= synonym %></li>
+              <% }); %> <% } else { %>
               <p>No synonyms found.</p>
               <% } %>
             </ul>
-
             <h2 class="text-primary">Antonyms</h2>
             <ul class="list-group mb-3">
               <% if (thesaurusData && thesaurusData[0].meta.ants &&
