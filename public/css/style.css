@@ -1,80 +1,84 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 
 * {
-  box-sizing: border-box !important;
-  transition: all 0.3s ease-in-out !important;
-  font-family: "Inter", sans-serif !important;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+  font-family: "Inter", sans-serif;
 }
 
 body {
-  background-color: #f7f7f7 !important; /* Light grey background color */
-  color: #333333 !important; /* Dark grey text color */
-  margin: 0 !important;
-  padding: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  min-height: 100vh !important;
-  line-height: 1.6 !important;
+  background-color: #ffffff; /* White background color */
+  color: #003338; /* Dark teal text color */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  line-height: 1.6;
 }
 
 header {
-  background-color: #ffffff !important; /* White header background color */
-  color: #333333 !important; /* Dark grey text color */
-  padding: 20px !important;
-  text-align: center !important;
-  width: 100% !important;
-  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1) !important; /* Adds a shadow to the header */
+  background-color: #003338; /* Dark teal header background color */
+  color: #ffffff; /* White text color */
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1); /* Adds a shadow to the header */
 }
 
 h1 {
-  margin: 0 !important;
-  color: #333333 !important; /* Dark grey color for headings */
-  font-size: 3rem !important;
+  margin: 0;
+  color: #ffffff; /* White color for headings */
+  font-size: 3rem;
+}
+
+nav {
+  margin-top: 20px;
 }
 
 nav ul {
-  list-style: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  display: flex !important;
-  justify-content: space-evenly !important;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 nav ul li {
-  margin: 0 10px !important;
+  margin: 0 10px;
 }
 
 nav ul li a {
-  color: #0074e4 !important; /* Blue text for the links */
-  text-decoration: none !important;
-  font-size: 1rem !important;
+  color: #003338; /* Dark teal text for the links */
+  text-decoration: none;
+  font-size: 1rem;
 }
 
 nav ul li a:hover {
-  color: #003f80 !important; /* Darker blue text color on hover */
+  color: #001a1c; /* Even darker teal text color on hover */
 }
 
 #content {
-  max-width: 900px !important;
-  width: 90% !important;
-  margin-top: 40px !important;
-  padding: 20px !important;
-  background-color: #ffffff !important; /* White background color for the content */
-  border-radius: 15px !important; /* Rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-  text-align: center !important;
+  max-width: 900px;
+  width: 90%;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #ffffff; /* White background color for the content */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 h2 {
-  color: #333333 !important; /* Dark grey color for sub-headings */
-  font-size: 2.5rem !important;
-  margin-bottom: 20px !important;
+  color: #003338; /* Dark teal color for sub-headings */
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
 p {
-  margin: 0 !important;
-  font-size: 1.2rem !important;
-  line-height: 1.8 !important;
-  color: #333333 !important; /* Dark grey text color */
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #003338; /* Dark teal text color */
 }
