@@ -113,15 +113,24 @@ const getSortedTerms = async () => {
   }
 };
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   const popularSearches = Object.entries(searchCounts)
     .sort((a, b) => b[1] - a[1])
     .slice(0, MAX_POPULAR_SEARCHES)
     .map((entry) => entry[0]);
 
-  const randomWord =
-    wordsOfTheDay[Math.floor(Math.random() * wordsOfTheDay.length)];
+  try {
+    const dbResponse = await pool.query(
+      "SELECT term FROM terms ORDER BY RANDOM() LIMIT 1"
+    );
+    if (dbResponse.rows.length > 0) {
+      randomWord = dbResponse.rows[0].term;
+    }
+  } catch (error) {
+    console.error(error);
+  }
 
+  // Render the index.ejs template with the updated randomWord value
   res.render("index", {
     recentSearches,
     popularSearches,
