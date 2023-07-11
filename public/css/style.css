@@ -82,3 +82,6 @@ p {
   line-height: 1.8;
   color: #003338; /* Dark teal text color */
 }
+.text-primary {
+  color: #02abae; /* Set the desired color */
+}
