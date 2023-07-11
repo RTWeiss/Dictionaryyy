@@ -235,7 +235,7 @@ app.get("/synonym/:synonym", async (req, res) => {
 
     if (data) {
       let definitions = [];
-      let partOfSpeech = [];
+      let partOfSpeech = "";
 
       if (data.fl) {
         partOfSpeech = data.fl;
