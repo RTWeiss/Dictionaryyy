@@ -72,6 +72,8 @@
                 <li class="card-text"><%= def.definition %></li>
                 <% }); %> <% } else { %>
                 <p>No definitions found.</p>
+                <% } %> <% if (typeof boggleScore !== "undefined") { %>
+                <h2 class="text-primary">Boggle Score: <%= boggleScore %></h2>
                 <% } %>
               </div>
             </div>

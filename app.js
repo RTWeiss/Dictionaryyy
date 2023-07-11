@@ -72,6 +72,32 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+const boggleScoringRules = {
+  1: ["E", "A", "I", "O", "N", "R", "T", "L", "S", "U"],
+  2: ["D", "G"],
+  3: ["B", "C", "M", "P"],
+  4: ["F", "H", "V", "W", "Y"],
+  5: ["K"],
+  8: ["J", "X"],
+  10: ["Q", "Z"],
+};
+
+const calculateBoggleScore = (word) => {
+  let score = 0;
+  word = word.toUpperCase();
+
+  for (let i = 0; i < word.length; i++) {
+    for (const [points, letters] of Object.entries(boggleScoringRules)) {
+      if (letters.includes(word[i])) {
+        score += parseInt(points);
+        break;
+      }
+    }
+  }
+
+  return score;
+};
+
 const MAX_RECENT_SEARCHES = 5;
 const MAX_POPULAR_SEARCHES = 5; // Maximum number of popular searches to display
 let recentSearches = [];
@@ -141,7 +167,6 @@ app.get("/", async (req, res) => {
     randomWord,
   });
 });
-
 app.get("/term/:word", async (req, res) => {
   const word = req.params.word;
 
@@ -160,6 +185,9 @@ app.get("/term/:word", async (req, res) => {
         .split(", ")
         .map((def) => ({ definition: def }));
 
+      // Calculate Boggle score
+      const boggleScoreValue = calculateBoggleScore(word);
+
       res.render("definition", {
         word: word,
         meanings: [
@@ -167,6 +195,7 @@ app.get("/term/:word", async (req, res) => {
         ],
         thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
         recentSearches: recentSearches,
+        boggleScore: boggleScoreValue,
       });
     } else {
       // If term doesn't exist in the database, redirect to the search route
@@ -177,6 +206,7 @@ app.get("/term/:word", async (req, res) => {
     res.status(500).send("An error occurred while fetching the data.");
   }
 });
+
 app.get("/synonym/:synonym", async (req, res) => {
   const synonym = req.params.synonym;
   try {
