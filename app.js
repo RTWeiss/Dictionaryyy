@@ -207,9 +207,6 @@ app.get("/synonym/:synonym", async (req, res) => {
       let synonyms = "No synonyms found";
       let antonyms = "No antonyms found";
 
-      if (thesaurusData.meta && thesaurusData.meta.syns[0]) {
-        synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", "); // Get the first 5 synonyms
-      }
       if (thesaurusData.meta && thesaurusData.meta.ants[0]) {
         antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", "); // Get the first 5 antonyms
       }
@@ -218,6 +215,23 @@ app.get("/synonym/:synonym", async (req, res) => {
       saveTerm(synonym, definitions, synonyms, antonyms, partOfSpeech);
       // Update search counts and recent searches
       updateSearches(synonym);
+
+      // Create a new definition page for the synonym
+      const synonymTermPath = path.join(termPath, encodeURIComponent(synonym));
+      if (!fs.existsSync(synonymTermPath)) {
+        fs.mkdirSync(synonymTermPath);
+      }
+      const synonymFilePath = path.join(synonymTermPath, "index.html");
+      const synonymHtml = await ejs.renderFile(
+        path.join(__dirname, "views", "definition.ejs"),
+        {
+          word: synonym,
+          meanings: [{ definitions: definitions, partOfSpeech: partOfSpeech }],
+          thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
+          recentSearches: recentSearches,
+        }
+      );
+      fs.writeFileSync(synonymFilePath, synonymHtml);
 
       // Redirect to the new definition page for the synonym
       res.redirect(`/term/${encodeURIComponent(synonym)}`);
@@ -272,6 +286,23 @@ app.get("/antonym/:antonym", async (req, res) => {
       // Update search counts and recent searches
       updateSearches(antonym);
 
+      // Create a new definition page for the antonym
+      const antonymTermPath = path.join(termPath, encodeURIComponent(antonym));
+      if (!fs.existsSync(antonymTermPath)) {
+        fs.mkdirSync(antonymTermPath);
+      }
+      const antonymFilePath = path.join(antonymTermPath, "index.html");
+      const antonymHtml = await ejs.renderFile(
+        path.join(__dirname, "views", "definition.ejs"),
+        {
+          word: antonym,
+          meanings: [{ definitions: definitions, partOfSpeech: partOfSpeech }],
+          thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
+          recentSearches: recentSearches,
+        }
+      );
+      fs.writeFileSync(antonymFilePath, antonymHtml);
+
       // Redirect to the new definition page for the antonym
       res.redirect(`/term/${encodeURIComponent(antonym)}`);
     } else {
@@ -282,114 +313,4 @@ app.get("/antonym/:antonym", async (req, res) => {
     console.error(error);
     res.status(500).send("An error occurred while fetching the data.");
   }
-});
-
-const updateSearches = async (word) => {
-  if (!recentSearches.includes(word)) {
-    recentSearches.unshift(word);
-    if (recentSearches.length > MAX_RECENT_SEARCHES) {
-      recentSearches.pop();
-    }
-  }
-
-  try {
-    await pool.query("INSERT INTO recent_searches (term) VALUES ($1)", [word]);
-    console.log("Recent search term saved to the database.");
-  } catch (err) {
-    console.error(err.stack);
-  }
-
-  // Increment search count for the word
-  if (searchCounts[word]) {
-    searchCounts[word]++;
-  } else {
-    searchCounts[word] = 1;
-  }
-};
-
-const saveTerm = async (term, definition, synonyms, antonyms, partOfSpeech) => {
-  try {
-    const res = await pool.query(
-      `INSERT INTO terms(term, definition, synonyms, antonyms, partOfSpeech)
-       SELECT $1, $2, $3, $4, $5
-       WHERE NOT EXISTS (SELECT 1 FROM terms WHERE term = $1)
-       RETURNING *`,
-      [term, definition, synonyms, antonyms, partOfSpeech]
-    );
-
-    if (res.rows.length > 0) {
-      console.log("Term saved to the database.");
-    } else {
-      console.log("Term already exists in the database.");
-    }
-  } catch (err) {
-    console.log(err.stack);
-  }
-};
-
-app.get("/glossary", async (req, res) => {
-  const terms = await getSortedTerms();
-  res.render("glossary", { terms });
-});
-
-app.get("/sitemap.xml", async (req, res) => {
-  const sitemap = await generateSitemap();
-  if (sitemap) {
-    res.header("Content-Type", "application/xml");
-    res.send(sitemap);
-  } else {
-    res.status(500).send("An error occurred while generating the sitemap.");
-  }
-});
-app.post("/", async (req, res, next) => {
-  const word = req.body.word.toLowerCase();
-  try {
-    const response = await axios.get(
-      `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
-    );
-    const data = response.data[0];
-
-    let definitions = [];
-    let partOfSpeech = "";
-
-    if (data.fl) {
-      partOfSpeech = data.fl; // field name is 'fl' for partOfSpeech
-    }
-
-    if (data.shortdef) {
-      definitions = data.shortdef.join(", "); // 'shortdef' is the correct field name for definitions
-    }
-
-    const thesaurusResponse = await axios.get(
-      `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=${API_KEY}`
-    );
-    const thesaurusData = thesaurusResponse.data[0];
-
-    let synonyms = "No synonyms found";
-    let antonyms = "No antonyms found";
-
-    if (thesaurusData.meta && thesaurusData.meta.syns[0]) {
-      synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", "); // Get the first 5 synonyms
-    }
-    if (thesaurusData.meta && thesaurusData.meta.ants[0]) {
-      antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", "); // Get the first 5 antonyms
-    }
-
-    saveTerm(word, definitions, synonyms, antonyms, partOfSpeech);
-    updateSearches(word);
-
-    res.redirect(`/term/${word}`);
-  } catch (error) {
-    console.error(error);
-    return next(error);
-  }
-});
-
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).send("An internal server error occurred");
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
 });
