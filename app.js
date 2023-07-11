@@ -8,6 +8,8 @@ app.use(express.static("public"));
 require("dotenv").config();
 const { parse } = require("pg-connection-string");
 const { Pool } = require("pg");
+const scrabbleScore = require("scrabble-score");
+const boggleSolver = require("boggle-solver");
 
 const config = parse(process.env.DATABASE_URL);
 const MERRIAM_WEBSTER_API_KEY = process.env.MERRIAM_WEBSTER_API_KEY;
@@ -160,6 +162,12 @@ app.get("/term/:word", async (req, res) => {
         .split(", ")
         .map((def) => ({ definition: def }));
 
+      // Calculate Scrabble score
+      const scrabbleScoreValue = scrabbleScore.wordScore(word);
+
+      // Calculate Boggle score
+      const boggleScoreValue = boggleSolver.scoreWord(word);
+
       res.render("definition", {
         word: word,
         meanings: [
@@ -167,6 +175,8 @@ app.get("/term/:word", async (req, res) => {
         ],
         thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
         recentSearches: recentSearches,
+        scrabbleScore: scrabbleScoreValue,
+        boggleScore: boggleScoreValue,
       });
     } else {
       // If term doesn't exist in the database, redirect to the search route
