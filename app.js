@@ -20,6 +20,20 @@ const pool = new Pool(config);
 
 const connectionString = process.env.DATABASE_URL;
 
+const { auth } = require("express-openid-connect");
+
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: "a long, randomly-generated string stored in env",
+  baseURL: "https://dictionaryyy.com",
+  clientID: "BKVWdMDPjreqvHiYJ595XHq3C72HmFlI",
+  issuerBaseURL: "https://dry-voice-8487.us.auth0.com",
+};
+
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
+
 // API keys below contain actual values tied to your Algolia account
 const client = algoliasearch("G2APVHL6O1", "597c24fa42e31685dac485baf6a8118e");
 const index = client.initIndex("terms");
@@ -189,6 +203,8 @@ const getSortedTerms = async () => {
 };
 
 app.get("/", async (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+
   const popularSearches = Object.entries(searchCounts)
     .sort((a, b) => b[1] - a[1])
     .slice(0, MAX_POPULAR_SEARCHES)
