@@ -215,18 +215,18 @@ app.get("/term/:word", async (req, res) => {
         scrabbleScore: scrabbleScoreValue,
       });
     } else {
-      // If term doesn't exist in the database, try to fetch from API
-      const apiResponse = await axios.get(
-        `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
-      );
-
-      const apiData = apiResponse.data[0];
-
-      // If the term does not exist in the API data or the API data is not a valid object, render 404 page
-      if (!apiData || typeof apiData !== "object") {
-        res.status(404).render("404");
-        return;
-      }
+      try {
+        const apiResponse = await axios.get(
+          `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
+        );
+      
+        const apiData = apiResponse.data[0];
+      
+        // If the term does not exist in the API data or the API data is not a valid object, render 404 page
+        if (!apiData || typeof apiData !== "object") {
+          res.status(404).render("404");
+          return;
+        }
 
       // Otherwise, use the API data to render the definition page
       let synonyms = "No synonyms found";
@@ -272,7 +272,7 @@ app.get("/term/:word", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send("An error occurred while fetching the data.");
+    res.status(404).render("404");
   }
 });
 
