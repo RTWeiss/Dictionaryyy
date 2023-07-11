@@ -23,44 +23,36 @@ const connectionString = process.env.DATABASE_URL;
 import algoliasearch from "algoliasearch";
 // API keys below contain actual values tied to your Algolia account
 const client = algoliasearch("G2APVHL6O1", "597c24fa42e31685dac485baf6a8118e");
-const index = client.initIndex("dictionaryyy");
+const index = client.initIndex("terms");
 
+// Function to add all terms to Algolia
+async function addAllTermsToAlgolia() {
+  // Fetch all terms from your PostgreSQL database
+  const { rows } = await pool.query("SELECT * FROM terms");
+
+  // Format terms for Algolia
+  const algoliaRecords = rows.map((row, index) => ({
+    objectID: row.id, // Algolia uses objectID for indexing. Consider using the database's id for the objectID
+    ...row, // Spread all other fields onto the object
+  }));
+
+  // Add terms to Algolia
+  try {
+    await index.saveObjects(algoliaRecords);
+    console.log("Successfully added all terms to Algolia!");
+  } catch (error) {
+    console.error("Error adding terms to Algolia:", error);
+  }
+}
+
+// Call function to add all terms to Algolia
+addAllTermsToAlgolia().catch(console.error);
 pool.on("error", (err, client) => {
   console.error("Unexpected error on idle client", err);
   process.exit(-1);
 });
 
 const port = process.env.PORT || 3000;
-
-const addTermsToAlgoliaIndex = async () => {
-  // Fetch all terms from the database
-  const dbResponse = await pool.query("SELECT * FROM terms");
-  const terms = dbResponse.rows;
-
-  // Map the terms data to the format needed for Algolia
-  const algoliaTerms = terms.map((term, index) => {
-    return {
-      objectID: index, // objectID is mandatory for Algolia to identify records
-      id: term.id,
-      term: term.term,
-      definition: term.definition,
-      synonyms: term.synonyms,
-      antonyms: term.antonyms,
-      partOfSpeech: term.partOfSpeech,
-    };
-  });
-
-  // Add data to Algolia
-  try {
-    await index.saveObjects(algoliaTerms);
-    console.log("Terms successfully added to Algolia index.");
-  } catch (error) {
-    console.error("Error adding terms to Algolia index: ", error);
-  }
-};
-
-// Call the function to add terms to Algolia when the application starts
-addTermsToAlgoliaIndex();
 
 const createTermsTable = async () => {
   try {
