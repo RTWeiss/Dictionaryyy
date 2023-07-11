@@ -177,6 +177,7 @@ app.get("/term/:word", async (req, res) => {
     res.status(500).send("An error occurred while fetching the data.");
   }
 });
+
 app.get("/synonym/:synonym", async (req, res) => {
   const synonym = req.params.synonym;
   try {
@@ -191,11 +192,11 @@ app.get("/synonym/:synonym", async (req, res) => {
       let partOfSpeech = "";
 
       if (data.fl) {
-        partOfSpeech = data.fl;
+        partOfSpeech = data.fl; // field name is 'fl' for partOfSpeech
       }
 
       if (data.shortdef) {
-        definitions = data.shortdef.map((def) => ({ definition: def }));
+        definitions = data.shortdef.join(", "); // 'shortdef' is the correct field name for definitions
       }
 
       const thesaurusResponse = await axios.get(
@@ -207,19 +208,19 @@ app.get("/synonym/:synonym", async (req, res) => {
       let antonyms = "No antonyms found";
 
       if (thesaurusData.meta && thesaurusData.meta.syns[0]) {
-        synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", ");
+        synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", "); // Get the first 5 synonyms
       }
       if (thesaurusData.meta && thesaurusData.meta.ants[0]) {
-        antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", ");
+        antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", "); // Get the first 5 antonyms
       }
 
-      // Render the definition page with the new search results
-      res.render("definition", {
-        word: synonym,
-        meanings: [{ definitions: definitions, partOfSpeech: partOfSpeech }],
-        thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
-        recentSearches: recentSearches,
-      });
+      // Save the term to the database
+      saveTerm(synonym, definitions, synonyms, antonyms, partOfSpeech);
+      // Update search counts and recent searches
+      updateSearches(synonym);
+
+      // Redirect to the new definition page for the synonym
+      res.redirect(`/term/${encodeURIComponent(synonym)}`);
     } else {
       // If the synonym is not found, redirect to the search route
       res.redirect(`/?word=${encodeURIComponent(synonym)}`);
@@ -244,11 +245,11 @@ app.get("/antonym/:antonym", async (req, res) => {
       let partOfSpeech = "";
 
       if (data.fl) {
-        partOfSpeech = data.fl;
+        partOfSpeech = data.fl; // field name is 'fl' for partOfSpeech
       }
 
       if (data.shortdef) {
-        definitions = data.shortdef.map((def) => ({ definition: def }));
+        definitions = data.shortdef.join(", "); // 'shortdef' is the correct field name for definitions
       }
 
       const thesaurusResponse = await axios.get(
@@ -260,19 +261,19 @@ app.get("/antonym/:antonym", async (req, res) => {
       let antonyms = "No antonyms found";
 
       if (thesaurusData.meta && thesaurusData.meta.syns[0]) {
-        synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", ");
+        synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", "); // Get the first 5 synonyms
       }
       if (thesaurusData.meta && thesaurusData.meta.ants[0]) {
-        antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", ");
+        antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", "); // Get the first 5 antonyms
       }
 
-      // Render the definition page with the new search results
-      res.render("definition", {
-        word: antonym,
-        meanings: [{ definitions: definitions, partOfSpeech: partOfSpeech }],
-        thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
-        recentSearches: recentSearches,
-      });
+      // Save the term to the database
+      saveTerm(antonym, definitions, synonyms, antonyms, partOfSpeech);
+      // Update search counts and recent searches
+      updateSearches(antonym);
+
+      // Redirect to the new definition page for the antonym
+      res.redirect(`/term/${encodeURIComponent(antonym)}`);
     } else {
       // If the antonym is not found, redirect to the search route
       res.redirect(`/?word=${encodeURIComponent(antonym)}`);
