@@ -216,17 +216,7 @@ app.get("/synonym/:synonym", async (req, res) => {
     saveTerm(synonym, definitions, synonyms, antonyms, partOfSpeech);
     updateSearches(synonym);
 
-    res.render("definition", {
-      word: synonym,
-      meanings: [
-        {
-          definitions: [{ definition: definitions }],
-          partOfSpeech: partOfSpeech,
-        },
-      ],
-      thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
-      recentSearches: recentSearches,
-    });
+    res.redirect(`/term/${encodeURIComponent(synonym)}`);
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching the data.");
@@ -271,17 +261,7 @@ app.get("/antonym/:antonym", async (req, res) => {
     saveTerm(antonym, definitions, synonyms, antonyms, partOfSpeech);
     updateSearches(antonym);
 
-    res.render("definition", {
-      word: antonym,
-      meanings: [
-        {
-          definitions: [{ definition: definitions }],
-          partOfSpeech: partOfSpeech,
-        },
-      ],
-      thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
-      recentSearches: recentSearches,
-    });
+    res.redirect(`/term/${encodeURIComponent(antonym)}`);
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching the data.");
