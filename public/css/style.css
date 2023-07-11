@@ -27,12 +27,6 @@ header {
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1); /* Adds a shadow to the header */
 }
 
-h1 {
-  margin: 0;
-  color: #ffffff; /* White color for headings */
-  font-size: 3rem;
-}
-
 nav {
   margin-top: 20px;
 }
@@ -69,13 +63,6 @@ nav ul li a:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
-
-h2 {
-  color: #003338; /* Dark teal color for sub-headings */
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
 p {
   margin: 0;
   font-size: 1.2rem;
@@ -83,5 +70,24 @@ p {
   color: #003338; /* Dark teal text color */
 }
 .text-primary {
-  color: #02abae; /* Set the desired color */
+  color: #02abae;
+}
+.bg-primary {
+  background-color: #02abae;
+}
+.btn-primary {
+  background-color: #009cc3;
+}
+
+.btn-primary:hover {
+  background-color: #1c88ca;
+}
+
+.definition-list {
+  margin-bottom: 1rem;
+}
+
+.definition-list li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
 }
