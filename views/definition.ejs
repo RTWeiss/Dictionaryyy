@@ -70,19 +70,13 @@
                 <% if (meaning.definitions && meaning.definitions.length > 0) {
                 %> <% meaning.definitions.forEach(function(def) { %>
                 <li class="card-text"><%= def.definition %></li>
-                <!-- Add the following lines to display the scores -->
-                <p>Scrabble Score: <%= scrabbleScore %></p>
-                <p>Boggle Score: <%= boggleScore %></p>
                 <% }); %> <% } else { %>
                 <p>No definitions found.</p>
                 <% } %>
               </div>
             </div>
             <% }); %> <% } else { %>
-            <p>
-              No meanings found for the word <%= word %> or an error occurred
-              while fetching the data.
-            </p>
+            <p>No meanings found for the word <%= word %>.</p>
             <% } %>
           </div>
           <div class="col-lg-3">
