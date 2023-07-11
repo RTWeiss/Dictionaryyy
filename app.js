@@ -202,7 +202,7 @@ app.get("/term/:word", async (req, res) => {
       // If definitions is empty or equal to an empty object, redirect to the homepage
       if (
         definitions.length === 0 ||
-        (definitions.length === 1 && JSON.stringify(definitions[0]) === "{}")
+        (definitions.length === 1 && definitions[0].definition.length <= 2)
       ) {
         res.redirect("/");
         return;
@@ -260,7 +260,7 @@ app.get("/term/:word", async (req, res) => {
         // If definitions is empty, redirect to the homepage
         if (
           definitions.length === 0 ||
-          (definitions.length === 1 && JSON.stringify(definitions[0]) === "{}")
+          (definitions.length === 1 && definitions[0].definition.length <= 2)
         ) {
           res.redirect("/");
           return;
