@@ -67,20 +67,20 @@ p {
   margin: 0;
   font-size: 1.2rem;
   line-height: 1.8;
-  color: #003338; /* Dark teal text color */
+  color: #003338 !important; /* Dark teal text color */
 }
 .text-primary {
-  color: #02abae;
+  color: #02abae !important;
 }
 .bg-primary {
-  background-color: #02abae;
+  background-color: #02abae !important;
 }
 .btn-primary {
-  background-color: #009cc3;
+  background-color: #009cc3 !important;
 }
 
 .btn-primary:hover {
-  background-color: #1c88ca;
+  background-color: #1c88ca !important;
 }
 
 .definition-list {
