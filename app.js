@@ -97,6 +97,25 @@ const calculateScrabbleScore = (word) => {
 
   return score;
 };
+const boggleScoringRules = {
+  3: 1,
+  4: 1,
+  5: 2,
+  6: 3,
+  7: 5,
+  8: 11,
+};
+
+const calculateBoggleScore = (word) => {
+  const length = word.length;
+  if (length >= 3 && length <= 8) {
+    return boggleScoringRules[length];
+  } else if (length > 8) {
+    return boggleScoringRules[8];
+  } else {
+    return 0;
+  }
+};
 
 const MAX_RECENT_SEARCHES = 5;
 const MAX_POPULAR_SEARCHES = 5; // Maximum number of popular searches to display
@@ -187,6 +206,8 @@ app.get("/term/:word", async (req, res) => {
 
       // Calculate Scrabble score
       const scrabbleScoreValue = calculateScrabbleScore(word);
+      // Calculate Boggle score
+      const boggleScoreValue = calculateBoggleScore(word);
 
       res.render("definition", {
         word: word,
@@ -195,6 +216,7 @@ app.get("/term/:word", async (req, res) => {
         ],
         thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
         recentSearches: recentSearches,
+        boggleScore: boggleScoreValue,
         scrabbleScore: scrabbleScoreValue,
       });
     } else {
