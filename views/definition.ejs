@@ -92,7 +92,7 @@
             <% } %>
           </div>
           <div class="col-lg-3">
-            <h2 class="text-primary">Recent Searches</h2>
+            <h4 class="text-primary">Recent Searches</h4>
             <ul class="list-group mb-3">
               <% recentSearches.forEach(function(search) { %>
               <li class="list-group-item">
@@ -103,7 +103,7 @@
               <% }); %>
             </ul>
 
-            <h2 class="text-primary">Synonyms</h2>
+            <h4 class="text-primary">Synonyms</h4>
             <ul class="list-group mb-3">
               <% if (thesaurusData && thesaurusData[0].meta.syns &&
               thesaurusData[0].meta.syns[0].length > 0) { %> <%
@@ -115,7 +115,7 @@
               <p>No synonyms found.</p>
               <% } %>
             </ul>
-            <h2 class="text-primary">Antonyms</h2>
+            <h4 class="text-primary">Antonyms</h4
             <ul class="list-group mb-3">
               <% if (thesaurusData && thesaurusData[0].meta.ants &&
               thesaurusData[0].meta.ants[0].length > 0) { %> <%
