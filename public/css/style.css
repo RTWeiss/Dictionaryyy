@@ -5,6 +5,11 @@
   transition: all 0.3s ease-in-out;
   font-family: "Lato", sans-serif;
 }
+header img {
+  width: 150px;
+  height: auto;
+  margin: 10px;
+}
 
 body {
   background-color: #ffffff; /* White background color */
