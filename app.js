@@ -66,7 +66,7 @@ initializeDatabase();
 
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
-    if (req.headers["x-forwarded-proto"] != "https") {
+    if (req.headers["x-forwarded-proto"] !== "https") {
       res.redirect(`https://${req.headers.host}${req.url}`);
     } else {
       next();
@@ -187,7 +187,6 @@ app.get("/term/:word", async (req, res) => {
     res.status(500).send("An error occurred while fetching the data.");
   }
 });
-
 app.get("/synonym/:synonym", async (req, res) => {
   const synonym = req.params.synonym;
   try {
