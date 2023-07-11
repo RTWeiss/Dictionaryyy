@@ -20,7 +20,6 @@ const pool = new Pool(config);
 
 const connectionString = process.env.DATABASE_URL;
 
-import algoliasearch from "algoliasearch";
 // API keys below contain actual values tied to your Algolia account
 const client = algoliasearch("G2APVHL6O1", "597c24fa42e31685dac485baf6a8118e");
 const index = client.initIndex("terms");
