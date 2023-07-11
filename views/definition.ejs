@@ -40,57 +40,31 @@
     </header>
     <main class="container">
       <div class="bg-white shadow rounded p-3 mb-4">
-        <!-- Search form... -->
+        <h2 class="text-center text-muted">Search for a Definition</h2>
+        <form method="POST" action="/">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              name="word"
+              class="form-control"
+              placeholder="Enter Word"
+              aria-label="Enter Word"
+            />
+            <button class="btn btn-primary" type="submit">Search</button>
+          </div>
+        </form>
       </div>
       <div class="bg-white shadow rounded p-3">
         <div class="row">
-          <div class="col-lg-3">
-            <h2 class="text-primary">Recent Searches</h2>
-            <% recentSearches.forEach(function(search) { %>
-            <div class="card mb-2">
-              <div class="card-body">
-                <a href="/term/<%= search %>">
-                  <%= search.charAt(0).toUpperCase() + search.slice(1) %>
-                </a>
-              </div>
-            </div>
-            <% }); %>
-
-            <h2 class="text-primary">Synonyms</h2>
-            <% if (thesaurusData && thesaurusData[0].meta.syns &&
-            thesaurusData[0].meta.syns[0].length > 0) { %> <%
-            thesaurusData[0].meta.syns[0].forEach(function(synonym) { %>
-            <div class="card mb-2">
-              <div class="card-body">
-                <a href="/term/<%= synonym %>"><%= synonym %></a>
-              </div>
-            </div>
-            <% }); %> <% } else { %>
-            <p>No synonyms found.</p>
-            <% } %>
-
-            <h2 class="text-primary">Antonyms</h2>
-            <% if (thesaurusData && thesaurusData[0].meta.ants &&
-            thesaurusData[0].meta.ants[0].length > 0) { %> <%
-            thesaurusData[0].meta.ants[0].forEach(function(antonym) { %>
-            <div class="card mb-2">
-              <div class="card-body">
-                <a href="/term/<%= antonym %>"><%= antonym %></a>
-              </div>
-            </div>
-            <% }); %> <% } else { %>
-            <p>No antonyms found.</p>
-            <% } %>
-          </div>
           <div class="col-lg-9">
-            <h1 class="text-primary mb-4">
+            <h1 class="text-primary">
               <%= word.charAt(0).toUpperCase() + word.slice(1) %>
             </h1>
             <% if (meanings && meanings.length > 0) { %> <%
             meanings.forEach(function(meaning) { %>
             <div class="card my-3">
               <div class="card-header">
-                <h2 class="text-secondary mb-0"><%= meaning.partOfSpeech %></h2>
+                <h2 class="text-secondary"><%= meaning.partOfSpeech %></h2>
               </div>
               <div class="card-body">
                 <% if (meaning.definitions && meaning.definitions.length > 0) {
@@ -98,20 +72,59 @@
                 <li class="card-text"><%= def.definition %></li>
                 <% }); %> <% } else { %>
                 <p>No definitions found.</p>
-                <% } %> <% if (typeof scrabbleScore !== "undefined") { %>
-                <h2 class="text-primary mb-0">
-                  Scrabble Score: <%= scrabbleScore %>
-                </h2>
-                <% } %> <% if (typeof boggleScore !== "undefined") { %>
-                <h2 class="text-primary mb-0">
-                  Boggle Score: <%= boggleScore %>
-                </h2>
-                <% } %>
+                <div class="card-body">
+                  <% } %> <% if (typeof scrabbleScore !== "undefined") { %>
+                  <h2 class="text-primary">
+                    Scrabble Score: <%= scrabbleScore %>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <% } %> <% if (typeof boggleScore !== "undefined") { %>
+                  <h2 class="text-primary">Boggle Score: <%= boggleScore %></h2>
+                  <% } %>
+                </div>
               </div>
             </div>
             <% }); %> <% } else { %>
             <p>No meanings found for the word <%= word %>.</p>
             <% } %>
+          </div>
+          <div class="col-lg-3">
+            <h2 class="text-primary">Recent Searches</h2>
+            <ul class="list-group mb-3">
+              <% recentSearches.forEach(function(search) { %>
+              <li class="list-group-item">
+                <a href="/term/<%= search %>">
+                  <%= search.charAt(0).toUpperCase() + search.slice(1) %>
+                </a>
+              </li>
+              <% }); %>
+            </ul>
+
+            <h2 class="text-primary">Synonyms</h2>
+            <ul class="list-group mb-3">
+              <% if (thesaurusData && thesaurusData[0].meta.syns &&
+              thesaurusData[0].meta.syns[0].length > 0) { %> <%
+              thesaurusData[0].meta.syns[0].forEach(function(synonym) { %>
+              <li class="list-group-item">
+                <a href="/term/<%= synonym %>"><%= synonym %></a>
+              </li>
+              <% }); %> <% } else { %>
+              <p>No synonyms found.</p>
+              <% } %>
+            </ul>
+            <h2 class="text-primary">Antonyms</h2>
+            <ul class="list-group mb-3">
+              <% if (thesaurusData && thesaurusData[0].meta.ants &&
+              thesaurusData[0].meta.ants[0].length > 0) { %> <%
+              thesaurusData[0].meta.ants[0].forEach(function(antonym) { %>
+              <li class="list-group-item">
+                <a href="/term/<%= antonym %>"><%= antonym %></a>
+              </li>
+              <% }); %> <% } else { %>
+              <p>No antonyms found.</p>
+              <% } %>
+            </ul>
           </div>
         </div>
       </div>
