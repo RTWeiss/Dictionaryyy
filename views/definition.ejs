@@ -72,17 +72,13 @@
                 <li class="card-text"><%= def.definition %></li>
                 <% }); %> <% } else { %>
                 <p>No definitions found.</p>
-                <div class="card-body">
-                  <% } %> <% if (typeof scrabbleScore !== "undefined") { %>
-                  <h2 class="text-primary">
-                    Scrabble Score: <%= scrabbleScore %>
-                  </h2>
-                </div>
-                <div class="card-body">
-                  <% } %> <% if (typeof boggleScore !== "undefined") { %>
-                  <h2 class="text-primary">Boggle Score: <%= boggleScore %></h2>
-                  <% } %>
-                </div>
+                <% } %> <% if (typeof scrabbleScore !== "undefined") { %>
+                <h2 class="text-primary">
+                  Scrabble Score: <%= scrabbleScore %>
+                </h2>
+                <% } %> <% if (typeof boggleScore !== "undefined") { %>
+                <h2 class="text-primary">Boggle Score: <%= boggleScore %></h2>
+                <% } %>
               </div>
             </div>
             <% }); %> <% } else { %>
