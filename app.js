@@ -199,10 +199,10 @@ app.get("/term/:word", async (req, res) => {
         .split(", ")
         .map((def) => ({ definition: def }));
 
-      // If definitions is empty, redirect to the homepage
+      // If definitions is empty or equal to an empty object, redirect to the homepage
       if (
         definitions.length === 0 ||
-        (definitions.length === 1 && definitions[0] === "{}")
+        (definitions.length === 1 && JSON.stringify(definitions[0]) === "{}")
       ) {
         res.redirect("/");
         return;
