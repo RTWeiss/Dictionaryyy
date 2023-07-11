@@ -22,6 +22,15 @@
       .btn-primary:hover {
         background-color: #0069d9;
       }
+
+      .definition-list {
+        margin-bottom: 1rem;
+      }
+
+      .definition-list li {
+        margin-bottom: 0.5rem;
+        line-height: 1.5;
+      }
     </style>
   </head>
   <body class="d-flex flex-column min-vh-100">
@@ -69,7 +78,9 @@
               <div class="card-body">
                 <% if (meaning.definitions && meaning.definitions.length > 0) {
                 %> <% meaning.definitions.forEach(function(def) { %>
-                <li class="card-text"><%= def.definition %></li>
+                <ul class="list-unstyled definition-list">
+                  <li><%= def.definition %></li>
+                </ul>
                 <% }); %> <% } else { %>
                 <p>No definitions found.</p>
                 <% } %>
