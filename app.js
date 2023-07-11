@@ -8,7 +8,6 @@ app.use(express.static("public"));
 require("dotenv").config();
 const { parse } = require("pg-connection-string");
 const { Pool } = require("pg");
-const algoliasearch = require("algoliasearch");
 
 const config = parse(process.env.DATABASE_URL);
 const MERRIAM_WEBSTER_API_KEY = process.env.MERRIAM_WEBSTER_API_KEY;
@@ -19,37 +18,6 @@ config.ssl = { rejectUnauthorized: false };
 const pool = new Pool(config);
 
 const connectionString = process.env.DATABASE_URL;
-
-// API keys below contain actual values tied to your Algolia account
-const client = algoliasearch("G2APVHL6O1", "597c24fa42e31685dac485baf6a8118e");
-const index = client.initIndex("terms");
-
-// Function to add all terms to Algolia
-async function addAllTermsToAlgolia() {
-  // Fetch all terms from your PostgreSQL database
-  const { rows } = await pool.query("SELECT * FROM terms");
-
-  // Format terms for Algolia
-  const algoliaRecords = rows.map((row, index) => ({
-    objectID: row.id, // Algolia uses objectID for indexing. Consider using the database's id for the objectID
-    ...row, // Spread all other fields onto the object
-  }));
-
-  // Add terms to Algolia
-  try {
-    await index.saveObjects(algoliaRecords);
-    console.log("Successfully added all terms to Algolia!");
-  } catch (error) {
-    console.error("Error adding terms to Algolia:", error);
-  }
-}
-
-// Call function to add all terms to Algolia
-addAllTermsToAlgolia().catch(console.error);
-pool.on("error", (err, client) => {
-  console.error("Unexpected error on idle client", err);
-  process.exit(-1);
-});
 
 const port = process.env.PORT || 3000;
 
