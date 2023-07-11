@@ -20,6 +20,78 @@ const pool = new Pool(config);
 
 const connectionString = process.env.DATABASE_URL;
 
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
+
+// Initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    // Fetch the user from the database
+    const dbResponse = await pool.query(
+      "SELECT * FROM users WHERE username = $1",
+      [username]
+    );
+    const user = dbResponse.rows[0];
+
+    if (!user) {
+      return done(null, false, { message: "No user with that username" });
+    }
+
+    try {
+      if (await bcrypt.compare(password, user.password)) {
+        return done(null, user);
+      } else {
+        return done(null, false, { message: "Password incorrect" });
+      }
+    } catch (e) {
+      return done(e);
+    }
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  const dbResponse = await pool.query("SELECT * FROM users WHERE id = $1", [
+    id,
+  ]);
+  done(null, dbResponse.rows[0]);
+});
+const createTables = async () => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS terms (
+         id SERIAL PRIMARY KEY,
+         term TEXT NOT NULL,
+         definition TEXT NOT NULL,
+         synonyms TEXT NOT NULL,
+         antonyms TEXT NOT NULL,
+         partOfSpeech TEXT NOT NULL
+      );
+            
+      CREATE TABLE IF NOT EXISTS recent_searches (
+        id SERIAL PRIMARY KEY,
+        term TEXT NOT NULL
+      );
+      
+      CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        username TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL
+      );
+    `);
+    console.log("Tables created or already exist.");
+  } catch (err) {
+    console.error(err.stack);
+  }
+};
+
 // API keys below contain actual values tied to your Algolia account
 const client = algoliasearch("G2APVHL6O1", "597c24fa42e31685dac485baf6a8118e");
 const index = client.initIndex("terms");
