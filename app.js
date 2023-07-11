@@ -8,6 +8,7 @@ app.use(express.static("public"));
 require("dotenv").config();
 const { parse } = require("pg-connection-string");
 const { Pool } = require("pg");
+const algoliasearch = require("algoliasearch");
 
 const config = parse(process.env.DATABASE_URL);
 const MERRIAM_WEBSTER_API_KEY = process.env.MERRIAM_WEBSTER_API_KEY;
@@ -30,6 +31,36 @@ pool.on("error", (err, client) => {
 });
 
 const port = process.env.PORT || 3000;
+
+const addTermsToAlgoliaIndex = async () => {
+  // Fetch all terms from the database
+  const dbResponse = await pool.query("SELECT * FROM terms");
+  const terms = dbResponse.rows;
+
+  // Map the terms data to the format needed for Algolia
+  const algoliaTerms = terms.map((term, index) => {
+    return {
+      objectID: index, // objectID is mandatory for Algolia to identify records
+      id: term.id,
+      term: term.term,
+      definition: term.definition,
+      synonyms: term.synonyms,
+      antonyms: term.antonyms,
+      partOfSpeech: term.partOfSpeech,
+    };
+  });
+
+  // Add data to Algolia
+  try {
+    await index.saveObjects(algoliaTerms);
+    console.log("Terms successfully added to Algolia index.");
+  } catch (error) {
+    console.error("Error adding terms to Algolia index: ", error);
+  }
+};
+
+// Call the function to add terms to Algolia when the application starts
+addTermsToAlgoliaIndex();
 
 const createTermsTable = async () => {
   try {
