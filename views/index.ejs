@@ -6,6 +6,12 @@
     <title>Definition Search | Find a Definition - Dictionaryyy</title>
     <link
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/algoliasearch@4.10.5/dist/algoliasearch.min.js"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.0/dist/autocomplete.jquery.min.js"></script>
+
+    <link
+      rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
@@ -38,11 +44,13 @@
             <h2 class="text-muted">Search for a Definition</h2>
             <form method="POST" class="input-group my-3">
               <input
+                id="search-input"
                 type="text"
                 name="word"
                 class="form-control"
                 placeholder="Enter a word"
               />
+
               <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Search</button>
               </div>

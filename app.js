@@ -23,6 +23,23 @@ const connectionString = process.env.DATABASE_URL;
 // API keys below contain actual values tied to your Algolia account
 const client = algoliasearch("G2APVHL6O1", "597c24fa42e31685dac485baf6a8118e");
 const index = client.initIndex("terms");
+$(document).ready(function () {
+  $("#search-input")
+    .autocomplete({ hint: false }, [
+      {
+        source: $.fn.autocomplete.sources.hits(index, { hitsPerPage: 5 }),
+        displayKey: "term", // the field you want to display in the autocomplete dropdown
+        templates: {
+          suggestion: function (suggestion) {
+            return suggestion._highlightResult.definition.value; // the field you want to display in the autocomplete dropdown
+          },
+        },
+      },
+    ])
+    .on("autocomplete:selected", function (event, suggestion, dataset) {
+      console.log(suggestion, dataset);
+    });
+});
 
 // Function to add all terms to Algolia
 async function addAllTermsToAlgolia() {
@@ -419,6 +436,7 @@ app.get("/sitemap.xml", async (req, res) => {
     res.status(500).send("An error occurred while generating the sitemap.");
   }
 });
+
 app.post("/", async (req, res, next) => {
   const word = req.body.word.toLowerCase();
   try {
