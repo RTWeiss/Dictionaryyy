@@ -72,7 +72,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const boggleScoringRules = {
+const scrabbleScoringRules = {
   1: ["E", "A", "I", "O", "N", "R", "T", "L", "S", "U"],
   2: ["D", "G"],
   3: ["B", "C", "M", "P"],
@@ -82,12 +82,12 @@ const boggleScoringRules = {
   10: ["Q", "Z"],
 };
 
-const calculateBoggleScore = (word) => {
+const calculateScrabbleScore = (word) => {
   let score = 0;
   word = word.toUpperCase();
 
   for (let i = 0; i < word.length; i++) {
-    for (const [points, letters] of Object.entries(boggleScoringRules)) {
+    for (const [points, letters] of Object.entries(scrabbleScoringRules)) {
       if (letters.includes(word[i])) {
         score += parseInt(points);
         break;
@@ -185,8 +185,8 @@ app.get("/term/:word", async (req, res) => {
         .split(", ")
         .map((def) => ({ definition: def }));
 
-      // Calculate Boggle score
-      const boggleScoreValue = calculateBoggleScore(word);
+      // Calculate Scrabble score
+      const scrabbleScoreValue = calculateScrabbleScore(word);
 
       res.render("definition", {
         word: word,
@@ -195,7 +195,7 @@ app.get("/term/:word", async (req, res) => {
         ],
         thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
         recentSearches: recentSearches,
-        boggleScore: boggleScoreValue,
+        scrabbleScore: scrabbleScoreValue,
       });
     } else {
       // If term doesn't exist in the database, redirect to the search route

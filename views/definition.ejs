@@ -72,8 +72,10 @@
                 <li class="card-text"><%= def.definition %></li>
                 <% }); %> <% } else { %>
                 <p>No definitions found.</p>
-                <% } %> <% if (typeof boggleScore !== "undefined") { %>
-                <h2 class="text-primary">Boggle Score: <%= boggleScore %></h2>
+                <% } %> <% if (typeof scrabbleScore !== "undefined") { %>
+                <h2 class="text-primary">
+                  Scrabble Score: <%= scrabbleScore %>
+                </h2>
                 <% } %>
               </div>
             </div>
