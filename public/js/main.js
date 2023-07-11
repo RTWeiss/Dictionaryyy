@@ -9,18 +9,18 @@ document.addEventListener("DOMContentLoaded", function () {
   autocomplete("#searchBox", { hint: false }, [
     {
       source: autocomplete.sources.hits(index, { hitsPerPage: 5 }),
-      displayKey: "word",
+      displayKey: "term",
       templates: {
         suggestion: function (suggestion) {
-          return suggestion._highlightResult.word.value;
+          return suggestion._highlightResult.term.value;
         },
       },
     },
   ]).on("autocomplete:selected", async function (event, suggestion, dataset) {
-    if (suggestion.meanings && suggestion.meanings.length > 0) {
+    if (suggestion.definition && suggestion.definition.length > 0) {
       displayDefinition(suggestion); // display the definition from Algolia when a suggestion is selected
     } else {
-      await getDefinition(suggestion.word); // Fetch definition from your API if the definition is not present in Algolia
+      await getDefinition(suggestion.term); // Fetch definition from your API if the definition is not present in Algolia
     }
   });
 });
