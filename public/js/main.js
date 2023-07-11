@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   ]).on("autocomplete:selected", async function (event, suggestion, dataset) {
     if (suggestion.definition && suggestion.definition.length > 0) {
-      displayDefinition(suggestion); // display the definition from Algolia when a suggestion is selected
+      displayAlgoliaDefinition(suggestion); // display the definition from Algolia when a suggestion is selected
     } else {
       await getDefinition(suggestion.term); // Fetch definition from your API if the definition is not present in Algolia
     }
@@ -32,7 +32,7 @@ async function getDefinition(word) {
     const data = await response.json();
 
     if (Array.isArray(data) && data.length > 0) {
-      displayDefinition(data[0]); // display the definition from your API
+      displayApiDefinition(data[0]); // display the definition from your API
     } else {
       resultDiv.innerText = "No definition found.";
     }
@@ -42,7 +42,7 @@ async function getDefinition(word) {
   }
 }
 
-function displayDefinition(item) {
+function displayApiDefinition(item) {
   const resultDiv = document.getElementById("result");
   resultDiv.innerText = ""; // clear the resultDiv
 
@@ -70,4 +70,18 @@ function displayDefinition(item) {
 
     resultDiv.appendChild(div);
   });
+}
+
+function displayAlgoliaDefinition(suggestion) {
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerText = ""; // clear the resultDiv
+
+  const div = document.createElement("div");
+  div.classList.add("meaning");
+
+  const p = document.createElement("p");
+  p.innerText = suggestion.definition;
+  div.appendChild(p);
+
+  resultDiv.appendChild(div);
 }
