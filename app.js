@@ -215,8 +215,60 @@ app.get("/term/:word", async (req, res) => {
         scrabbleScore: scrabbleScoreValue,
       });
     } else {
-      // If term doesn't exist in the database, redirect to the search route
-      res.redirect(`/?word=${encodeURIComponent(word)}`);
+      // If term doesn't exist in the database, try to fetch from API
+      const apiResponse = await axios.get(
+        `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${MERRIAM_WEBSTER_API_KEY}`
+      );
+
+      const apiData = apiResponse.data[0];
+
+      // If the term does not exist in the API data or the API data is not a valid object, render 404 page
+      if (!apiData || typeof apiData !== "object") {
+        res.status(404).render("404");
+        return;
+      }
+
+      // Otherwise, use the API data to render the definition page
+      let synonyms = "No synonyms found";
+      let antonyms = "No antonyms found";
+      let definitions = [];
+      let partOfSpeech = "";
+
+      if (apiData.meta && apiData.meta.syns[0]) {
+        synonyms = apiData.meta.syns[0].join(", ");
+      }
+      if (apiData.meta && apiData.meta.ants[0]) {
+        antonyms = apiData.meta.ants[0].join(", ");
+      }
+      if (apiData.shortdef) {
+        definitions = apiData.shortdef.map((def) => ({ definition: def }));
+      }
+      if (apiData.fl) {
+        partOfSpeech = apiData.fl;
+      }
+
+      // Calculate Scrabble score
+      const scrabbleScoreValue = calculateScrabbleScore(word);
+      // Calculate Boggle score
+      const boggleScoreValue = calculateBoggleScore(word);
+
+      res.render("definition", {
+        word: word,
+        meanings: [{ definitions: definitions, partOfSpeech: partOfSpeech }],
+        thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
+        recentSearches: recentSearches,
+        boggleScore: boggleScoreValue,
+        scrabbleScore: scrabbleScoreValue,
+      });
+
+      // Save term to the database
+      await saveTerm(
+        word,
+        definitions.join(", "),
+        synonyms,
+        antonyms,
+        partOfSpeech
+      );
     }
   } catch (error) {
     console.error(error);
