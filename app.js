@@ -199,6 +199,30 @@ app.get("/term/:word", async (req, res) => {
         .split(", ")
         .map((def) => ({ definition: def }));
 
+      // Check if each synonym exists in the database. If not, redirect to homepage
+      for (let synonym of synonyms) {
+        const synonymResponse = await pool.query(
+          "SELECT * FROM terms WHERE term = $1",
+          [synonym]
+        );
+        if (synonymResponse.rows.length === 0) {
+          res.redirect("/");
+          return;
+        }
+      }
+
+      // Check if each antonym exists in the database. If not, redirect to homepage
+      for (let antonym of antonyms) {
+        const antonymResponse = await pool.query(
+          "SELECT * FROM terms WHERE term = $1",
+          [antonym]
+        );
+        if (antonymResponse.rows.length === 0) {
+          res.redirect("/");
+          return;
+        }
+      }
+
       // If definitions is empty or equal to an empty object, redirect to the homepage
       if (
         definitions.length === 0 ||
