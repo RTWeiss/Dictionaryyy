@@ -214,6 +214,13 @@ app.get("/term/:word", async (req, res) => {
         boggleScore: boggleScoreValue,
         scrabbleScore: scrabbleScoreValue,
       });
+      if (
+        definitions.length === 0 ||
+        (definitions.length === 1 && definitions[0] === "{}")
+      ) {
+        res.redirect("/");
+        return;
+      }
     } else {
       // If term doesn't exist in the database, redirect to the search route
       res.redirect(`/?word=${encodeURIComponent(word)}`);
