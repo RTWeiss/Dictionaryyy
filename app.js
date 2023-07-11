@@ -177,46 +177,53 @@ app.get("/term/:word", async (req, res) => {
     res.status(500).send("An error occurred while fetching the data.");
   }
 });
-
 app.get("/synonym/:synonym", async (req, res) => {
   const synonym = req.params.synonym;
-
   try {
+    // Perform a new search for the synonym
     const response = await axios.get(
       `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${synonym}?key=${MERRIAM_WEBSTER_API_KEY}`
     );
     const data = response.data[0];
 
-    let definitions = [];
-    let partOfSpeech = "";
+    if (data) {
+      let definitions = [];
+      let partOfSpeech = "";
 
-    if (data.fl) {
-      partOfSpeech = data.fl; // field name is 'fl' for partOfSpeech
+      if (data.fl) {
+        partOfSpeech = data.fl;
+      }
+
+      if (data.shortdef) {
+        definitions = data.shortdef.map((def) => ({ definition: def }));
+      }
+
+      const thesaurusResponse = await axios.get(
+        `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${synonym}?key=${API_KEY}`
+      );
+      const thesaurusData = thesaurusResponse.data[0];
+
+      let synonyms = "No synonyms found";
+      let antonyms = "No antonyms found";
+
+      if (thesaurusData.meta && thesaurusData.meta.syns[0]) {
+        synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", ");
+      }
+      if (thesaurusData.meta && thesaurusData.meta.ants[0]) {
+        antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", ");
+      }
+
+      // Render the definition page with the new search results
+      res.render("definition", {
+        word: synonym,
+        meanings: [{ definitions: definitions, partOfSpeech: partOfSpeech }],
+        thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
+        recentSearches: recentSearches,
+      });
+    } else {
+      // If the synonym is not found, redirect to the search route
+      res.redirect(`/?word=${encodeURIComponent(synonym)}`);
     }
-
-    if (data.shortdef) {
-      definitions = data.shortdef.join(", "); // 'shortdef' is the correct field name for definitions
-    }
-
-    const thesaurusResponse = await axios.get(
-      `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${synonym}?key=${API_KEY}`
-    );
-    const thesaurusData = thesaurusResponse.data[0];
-
-    let synonyms = "No synonyms found";
-    let antonyms = "No antonyms found";
-
-    if (thesaurusData.meta && thesaurusData.meta.syns[0]) {
-      synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", "); // Get the first 5 synonyms
-    }
-    if (thesaurusData.meta && thesaurusData.meta.ants[0]) {
-      antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", "); // Get the first 5 antonyms
-    }
-
-    saveTerm(synonym, definitions, synonyms, antonyms, partOfSpeech);
-    updateSearches(synonym);
-
-    res.redirect(`/term/${encodeURIComponent(synonym)}`);
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching the data.");
@@ -225,43 +232,51 @@ app.get("/synonym/:synonym", async (req, res) => {
 
 app.get("/antonym/:antonym", async (req, res) => {
   const antonym = req.params.antonym;
-
   try {
+    // Perform a new search for the antonym
     const response = await axios.get(
       `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${antonym}?key=${MERRIAM_WEBSTER_API_KEY}`
     );
     const data = response.data[0];
 
-    let definitions = [];
-    let partOfSpeech = "";
+    if (data) {
+      let definitions = [];
+      let partOfSpeech = "";
 
-    if (data.fl) {
-      partOfSpeech = data.fl; // field name is 'fl' for partOfSpeech
+      if (data.fl) {
+        partOfSpeech = data.fl;
+      }
+
+      if (data.shortdef) {
+        definitions = data.shortdef.map((def) => ({ definition: def }));
+      }
+
+      const thesaurusResponse = await axios.get(
+        `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${antonym}?key=${API_KEY}`
+      );
+      const thesaurusData = thesaurusResponse.data[0];
+
+      let synonyms = "No synonyms found";
+      let antonyms = "No antonyms found";
+
+      if (thesaurusData.meta && thesaurusData.meta.syns[0]) {
+        synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", ");
+      }
+      if (thesaurusData.meta && thesaurusData.meta.ants[0]) {
+        antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", ");
+      }
+
+      // Render the definition page with the new search results
+      res.render("definition", {
+        word: antonym,
+        meanings: [{ definitions: definitions, partOfSpeech: partOfSpeech }],
+        thesaurusData: [{ meta: { syns: [synonyms], ants: [antonyms] } }],
+        recentSearches: recentSearches,
+      });
+    } else {
+      // If the antonym is not found, redirect to the search route
+      res.redirect(`/?word=${encodeURIComponent(antonym)}`);
     }
-
-    if (data.shortdef) {
-      definitions = data.shortdef.join(", "); // 'shortdef' is the correct field name for definitions
-    }
-
-    const thesaurusResponse = await axios.get(
-      `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${antonym}?key=${API_KEY}`
-    );
-    const thesaurusData = thesaurusResponse.data[0];
-
-    let synonyms = "No synonyms found";
-    let antonyms = "No antonyms found";
-
-    if (thesaurusData.meta && thesaurusData.meta.syns[0]) {
-      synonyms = thesaurusData.meta.syns[0].slice(0, 5).join(", "); // Get the first 5 synonyms
-    }
-    if (thesaurusData.meta && thesaurusData.meta.ants[0]) {
-      antonyms = thesaurusData.meta.ants[0].slice(0, 5).join(", "); // Get the first 5 antonyms
-    }
-
-    saveTerm(antonym, definitions, synonyms, antonyms, partOfSpeech);
-    updateSearches(antonym);
-
-    res.redirect(`/term/${encodeURIComponent(antonym)}`);
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred while fetching the data.");
