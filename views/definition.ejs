@@ -72,15 +72,22 @@
                 <li class="card-text"><%= def.definition %></li>
                 <% }); %> <% } else { %>
                 <p>No definitions found.</p>
-                <% } %> <% if (typeof scrabbleScore !== "undefined") { %>
-                <h2 class="text-primary">
-                  Scrabble Score: <%= scrabbleScore %>
-                </h2>
-                <% } %> <% if (typeof boggleScore !== "undefined") { %>
-                <h2 class="text-primary">Boggle Score: <%= boggleScore %></h2>
+              </div>
+              <% if (typeof scrabbleScore !== "undefined" || typeof boggleScore !== "undefined") { %>
+              <div class="card-footer">
+                <% if (typeof scrabbleScore !== "undefined") { %>
+                <h4 class="text-primary">Scrabble Score: <%= scrabbleScore %></h4>
+                <% } %>
+                <% if (typeof boggleScore !== "undefined") { %>
+                <h4 class="text-primary">Boggle Score: <%= boggleScore %></h4>
                 <% } %>
               </div>
+              <% } %>
             </div>
+            <% }); %> <% } else { %>
+            <p>No meanings found for the word <%= word %>.</p>
+            <% } %>
+          </div>
             <% }); %> <% } else { %>
             <p>No meanings found for the word <%= word %>.</p>
             <% } %>
